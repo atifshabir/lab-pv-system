@@ -1,0 +1,87 @@
+<div class="card" #ipanel>
+    <div class="card-body">
+
+      <div *ngIf="!this.dataService.infoPresent">
+        <h5>Select Lab-Machine or PV to view details</h5>
+      </div>
+
+
+      <div class="row" *ngIf="this.dataService.infoPresent && this.dataService.pvInfo">
+        <h4>Lab Machine Info</h4>
+      </div>
+
+      <div *ngIf="this.dataService.infoPresent && this.dataService.pvInfo" #machineInfo class="row">
+        
+          <div class="col-12">
+            <div class="table-responsive">
+            <table class="table table-sm table-dark">
+                <thead>
+                  <tr>
+                    
+                    <th scope="col">PV-ID</th>
+                    <th scope="col">LAB-ID</th>
+                    <th scope="col">LAB ORDER</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{this.dataService.selectedPv.PV_ID}}</td>
+                    <td>{{this.dataService.selectedPv.LAB_ID}}</td>
+                    <td>{{this.dataService.selectedPv.LAB_order}}</td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+              </div>
+          </div>
+      </div>
+
+      <div class="row" *ngIf="this.dataService.infoPresent && this.dataService.labMachineInfo">
+        <h4>Lab Reg Info</h4>
+      </div>
+      <div class="row" *ngIf="this.dataService.infoPresent && this.dataService.labMachineInfo">
+          <div class="col-12">
+            <div class="table-responsive">
+            <table class="table table-sm table-dark">
+                <thead>
+                  <tr>
+                    
+                    <th scope="col">LAB-ID</th>
+                    <th scope="col">City</th>
+                    <th scope="col">Area</th>
+                    <th scope="col">Phase</th>
+                    <th scope="col">Street</th>
+                    <th scope="col">Sub-Street</th>
+                    <th scope="col">Building</th>
+                    <th scope="col">Floor</th>
+                    <th scope="col">PR1</th>
+                    <th scope="col">PR2</th>
+                    <th scope="col">DR1</th>
+                    <th scope="col">DR2</th>
+                    <th scope="col">SS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{this.dataService.selectedLabMachine.LAB_ID}}</td>
+                    <td>{{this.dataService.selectedLabMachine.City}}</td>
+                    <td>{{this.dataService.selectedLabMachine.Area}}</td>
+                    <td>{{this.dataService.selectedLabMachine.Phase}}</td>
+                    <td>{{this.dataService.selectedLabMachine.St}}</td>
+                    <td>{{this.dataService.selectedLabMachine.S_ST}}</td>
+                    <td>{{this.dataService.selectedLabMachine.Building}}</td>
+                    <td>{{this.dataService.selectedLabMachine.Floor}}</td>
+                    <td>{{this.dataService.selectedLabMachine.PR1}}</td>
+                    <td>{{this.dataService.selectedLabMachine.PR2}}</td>
+                    <td>{{this.dataService.selectedLabMachine.DR1}}</td>
+                    <td>{{this.dataService.selectedLabMachine.DR2}}</td>
+                    <td>{{this.dataService.selectedLabMachine.SS}}</td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+              </div>
+          </div>
+      </div>
+    </div>
+</div>
