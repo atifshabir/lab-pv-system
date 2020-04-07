@@ -33,7 +33,7 @@ export class MapPanelComponent implements OnInit {
 
   //
 
-  pollTime: number = 10; // time in seconds to sync with db
+  pollTime: number = 3; // time in seconds to sync with db
 
 
   // Data Arrays
@@ -102,13 +102,93 @@ export class MapPanelComponent implements OnInit {
     this.dataPoll();
   }
 
+  getDataCount: any = 0;
+  updateLocAfterFreshPVData: boolean = false;
   dataPoll(){
     //console.log("pv assign: "+this.dataService.pvAssignInProgress);
     
     if(!this.dataService.pvAssignInProgress){
+      /*
+      if(this.isMobile){
+        this.sendMyLocationUpdate();
+      }
+      */
+      this.getDataCount ++;
+      this.updateLocAfterFreshPVData = true;
+      console.log("Get data called ", this.getDataCount, " times");
       this.getData();
     }
     setTimeout(this.dataPoll.bind(this), this.pollTime*1000);
+  }
+
+  public invalidIDCount: number = 0;
+  
+
+  getLocation() {
+
+    var elementOpts = document.getElementById("dbgAtif1")! as HTMLInputElement;
+    
+    if (navigator.geolocation) {
+      console.log("Now getting loc");
+      navigator.geolocation.getCurrentPosition(position => {
+        console.log("loc gott");
+
+        //elementOpts.innerHTML = "loc success";
+
+        this.dataService.myLat = position.coords.latitude;
+        this.dataService.myLon = position.coords.longitude;
+      }, error => {
+        console.log("loc error: ", error.message);
+        //elementOpts.innerHTML = "locFail: " + error.code.toString();
+      });
+    }
+    else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
+
+  async sendMyLocationUpdate(){
+
+    //Get current location here and update these numbers
+
+    //this.dataService.myLat = 34.0482809;
+    //this.dataService.myLon = -118.2437;
+
+    this.getLocation();
+
+    //this.dataService.myLat = this.dataService.myLat + 0.001;
+
+    var e = this.pvInfo.find(x => x.PV_ID === this.dataService.myPvID);
+
+    
+    if(e == null) {
+      console.log("Atif_pvID. Couldnot find pvID " , this.invalidIDCount, "times");
+      this.invalidIDCount ++;
+      if(this.invalidIDCount > 1) {
+        this.dataService.myPvID = 0;
+      }
+      return;
+    }
+    
+    console.log("AtifLoc_02. ", this.dataService.myLat, ",", this.dataService.myLon);
+
+    this.dataService.updatePvInfo({
+      //pv_id: e.PV_ID,
+      //lab_order: e.LAB_order,
+      //lab_id: e.LAB_ID,
+      //lat: this.dataService.myLat,
+      //lon: this.dataService.myLon
+      pv_id: e.PV_ID,
+      lab_order: e.LAB_order,
+      lab_id: e.LAB_ID,
+      lat: this.dataService.myLat,
+      lon: this.dataService.myLon
+    }).subscribe( async data=>{
+      //console.log(data);
+      var notificationTitle = "New PV Assignment";
+      var notificationBody = "Process Validation (PV) ID: "+data.data.pv_id+" has been assigned to LAB ID: "+ data.data.lab_id
+      //this.webService.sendNotification(notificationTitle, notificationBody).subscribe();
+    });
   }
 
   clearData(){
@@ -118,6 +198,7 @@ export class MapPanelComponent implements OnInit {
     this.refreshMarkers();
   }
 
+  dbgAtifPVInfoUpdate: any = 0;
   getData(){
 
     this.clearData();
@@ -174,6 +255,15 @@ export class MapPanelComponent implements OnInit {
           this.pvInfo.push(new PVInfo(pv.pv_id, pv.lat, pv.lon, pv.lab_id, pv.lab_order));
           this.refreshMarkers();
         });
+
+        //Now update you PV in the database with your current location
+        if(this.isMobile && this.updateLocAfterFreshPVData){
+          this.sendMyLocationUpdate();
+          this.updateLocAfterFreshPVData = false;
+        }
+        
+       this.dbgAtifPVInfoUpdate ++;
+       console.log("PV info update.... ", this.dbgAtifPVInfoUpdate, " times")
       },
       err=>{
         console.log(err);

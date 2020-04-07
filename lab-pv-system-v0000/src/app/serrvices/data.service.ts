@@ -11,6 +11,10 @@ export class DataService {
   //For initial pvIDs
   myPvID: number = 0; //PV-ID of this user
 
+  //For liveUpdatation of myPVID
+  myLat: number = 34.0482809;
+  myLon: number = -118.2437;
+
   // for info panel
   infoPresent: Boolean = false;
 

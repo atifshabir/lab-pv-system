@@ -135,7 +135,6 @@ mongoose.connect(mongoConnectionString, async function(){
 
     //6548268, 34.0444611, -118.2636114, "Los Angeles", "245", "Fifth Area", "7", "", "12", "4th", 1, 0, 1, 1, 0
 
-
     await new MachineInfo({
       lab_id: 1,
       pr1: 0,
@@ -172,12 +171,10 @@ mongoose.connect(mongoConnectionString, async function(){
       ss: 0
     }).save();
 
-
     await new EgcrInfo({
       lat: 34.0367087, 
       lon: -118.163447
     }).save();
-
 
     await new PvInfo({
       lat: 34.0494611, 
@@ -193,14 +190,12 @@ mongoose.connect(mongoConnectionString, async function(){
       lab_order: "CCR"
     }).save();
 
-
     await new PvInfo({
       lat: 33.9903218, 
       lon: -118.2764002,
       lab_id: 0, 
       lab_order: "Self"
     }).save();
-
   }
 });
 
