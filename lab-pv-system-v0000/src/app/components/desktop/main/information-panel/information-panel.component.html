@@ -1,13 +1,13 @@
 <div class="card" #ipanel>
-    <div class="card-body">
+    <div class="card-body" style="background-color:DarkCyan;">
 
-      <div *ngIf="!this.dataService.infoPresent">
-        <h5>Select Lab-Machine or PV to view details</h5>
+      <div *ngIf="!this.dataService.infoPresent" style="background-color:DarkCyan;">
+        <h5 style="color:FloralWhite;">Select House or PV to view details</h5>
       </div>
 
 
       <div class="row" *ngIf="this.dataService.infoPresent && this.dataService.pvInfo">
-        <h4>Lab Machine Info</h4>
+        <h5 style="color:FloralWhite;">Patrol-Vehicle Information</h5>
       </div>
 
       <div *ngIf="this.dataService.infoPresent && this.dataService.pvInfo" #machineInfo class="row">
@@ -37,7 +37,7 @@
       </div>
 
       <div class="row" *ngIf="this.dataService.infoPresent && this.dataService.labMachineInfo">
-        <h4>Lab Reg Info</h4>
+        <h5 style="color:FloralWhite;">House Information</h5>
       </div>
       <div class="row" *ngIf="this.dataService.infoPresent && this.dataService.labMachineInfo">
           <div class="col-12">
@@ -46,7 +46,7 @@
                 <thead>
                   <tr>
                     
-                    <th scope="col">LAB-ID</th>
+                    <th scope="col">HSS-ID</th>
                     <th scope="col">City</th>
                     <th scope="col">Area</th>
                     <th scope="col">Phase</th>

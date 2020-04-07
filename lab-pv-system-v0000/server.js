@@ -147,7 +147,7 @@ mongoose.connect(mongoConnectionString, async function(){
 
     await new MachineInfo({
       lab_id: 2,
-      pr1: 1,
+      pr1: 0,
       pr2: 0,
       dr1: 0,
       dr2: 0,
@@ -156,19 +156,19 @@ mongoose.connect(mongoConnectionString, async function(){
 
     await new MachineInfo({
       lab_id: 3,
-      pr1: 1,
-      pr2: 1,
-      dr1: 1,
+      pr1: 0,
+      pr2: 0,
+      dr1: 0,
       dr2: 0,
       ss: 0
     }).save();
 
     await new MachineInfo({
       lab_id: 4,
-      pr1: 1,
+      pr1: 0,
       pr2: 0,
-      dr1: 1,
-      dr2: 1,
+      dr1: 0,
+      dr2: 0,
       ss: 0
     }).save();
 
@@ -197,7 +197,7 @@ mongoose.connect(mongoConnectionString, async function(){
     await new PvInfo({
       lat: 33.9903218, 
       lon: -118.2764002,
-      lab_id: 2, 
+      lab_id: 0, 
       lab_order: "Self"
     }).save();
 

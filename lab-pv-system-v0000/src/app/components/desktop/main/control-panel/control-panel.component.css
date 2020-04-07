@@ -1,7 +1,5 @@
 .my-pattern{
-    background-image: radial-gradient(#212121 20%, transparent 20%),
-        radial-gradient(#fafafa 20%, transparent 20%);
-    background-color: #e53935;
+    background-color: LightSteelBlue;
     background-position: 0 0, 6px 6px;
     background-size: 12px 12px;
 }

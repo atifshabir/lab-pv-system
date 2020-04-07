@@ -264,13 +264,14 @@ export class MapPanelComponent implements OnInit {
       if(assigned){
         // creating red star
         iconCfg = {
-          url: 'assets/icons/red_star.png',
+          
+		  url: 'assets/icons/alarm_lab.gif',
           anchor: new google.maps.Point(20, 20)
         };
       } else {
         // creating blue star
         iconCfg = {
-          url: 'assets/icons/blue_star.png',
+		  url: 'assets/icons/blue_lab.gif',
           anchor: new google.maps.Point(20, 20)
         };
       }
@@ -344,7 +345,7 @@ export class MapPanelComponent implements OnInit {
       if(assigned){
         // creating red triangle marker
         iconCfg = {
-          url: 'assets/icons/red_triangle.png',
+          url: 'assets/icons/alarm_pv.gif',
           anchor: new google.maps.Point(20, 20)
         };
 
@@ -358,7 +359,7 @@ export class MapPanelComponent implements OnInit {
       } else {
         // creating blue triangle marker
         iconCfg = {
-          url: 'assets/icons/blue_triangle.png',
+          url: 'assets/icons/blue_pv.gif',
           anchor: new google.maps.Point(20, 20)
         };
       }
@@ -419,7 +420,7 @@ export class MapPanelComponent implements OnInit {
     this.egcrInfo.forEach((record)=>{
       var rectangle_marker = new google.maps.Marker({
         position: {lat: record.Lat.valueOf(), lng: record.Lon.valueOf()},
-        icon:'assets/icons/rectangle.png',
+        icon:'assets/icons/egcr.gif',
         map: this.map,
         cursor: 'help',
         title: record.EGCR_ID.toString()
@@ -572,4 +573,15 @@ export class MapPanelComponent implements OnInit {
     });
   }
 
+    validationEnded(lab: LabMachineInfo){
+    // now need to get PV from location of the user
+
+    this.pvInfo.forEach((e)=>{
+      if(this.getDistanceFromLatLonInKm(e.Lat.valueOf(), e.Lon.valueOf(), this.Lat.valueOf(), this.Lon.valueOf()) < 0.5){
+        this.assignPvToLab(e.PV_ID, 0, "Self");
+        this.modalRef.hide();
+        return;
+      }
+    });
+  }
 }
