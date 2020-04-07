@@ -17,6 +17,7 @@ import { environment } from '../environments/environment';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireModule } from 'angularfire2';
+import { MyIdComponent } from './components/mobile/mobile-main/my-id/my-id.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AngularFireModule } from 'angularfire2';
     MapPanelComponent,
     InformationPanelComponent,
     ControlPanelComponent,
-    MobileMainComponent
+    MobileMainComponent,
+    MyIdComponent
   ],
   imports: [
     BrowserModule,

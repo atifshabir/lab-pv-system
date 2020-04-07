@@ -8,6 +8,8 @@ import { WebService } from './web.service';
 })
 export class DataService {
 
+  //For initial pvIDs
+  myPvID: number = 0; //PV-ID of this user
 
   // for info panel
   infoPresent: Boolean = false;

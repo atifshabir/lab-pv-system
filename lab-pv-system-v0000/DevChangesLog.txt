@@ -1,0 +1,15 @@
+Version 0002:
+=============
+
+Features added:
+===============
+  pc-frontend
+   none
+  mobile-frontend
+   1) Intiallize component where the user enters his pvID. [Component add with the name my-id]
+   2) During assingLabToPV the id of pv is not taken from the distance calculation. It is taken from my-id
+   3) my-id is stoed in dataService
+   
+History:
+========
+Version 0001

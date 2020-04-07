@@ -565,7 +565,9 @@ export class MapPanelComponent implements OnInit {
     // now need to get PV from location of the user
 
     this.pvInfo.forEach((e)=>{
-      if(this.getDistanceFromLatLonInKm(e.Lat.valueOf(), e.Lon.valueOf(), this.Lat.valueOf(), this.Lon.valueOf()) < 0.5){
+      //if(this.getDistanceFromLatLonInKm(e.Lat.valueOf(), e.Lon.valueOf(), this.Lat.valueOf(), this.Lon.valueOf()) < 0.5){
+      console.log("Atif_AssignToMe ", e.PV_ID, ", ", this.dataService.myPvID);
+      if(e.PV_ID == this.dataService.myPvID){
         this.assignPvToLab(e.PV_ID, lab.LAB_ID, "Self");
         this.modalRef.hide();
         return;
@@ -577,7 +579,9 @@ export class MapPanelComponent implements OnInit {
     // now need to get PV from location of the user
 
     this.pvInfo.forEach((e)=>{
-      if(this.getDistanceFromLatLonInKm(e.Lat.valueOf(), e.Lon.valueOf(), this.Lat.valueOf(), this.Lon.valueOf()) < 0.5){
+      //if(this.getDistanceFromLatLonInKm(e.Lat.valueOf(), e.Lon.valueOf(), this.Lat.valueOf(), this.Lon.valueOf()) < 0.5){
+      console.log("Atif_InspectionEnded ", e.PV_ID, ", ", this.dataService.myPvID);
+      if(e.PV_ID == this.dataService.myPvID){
         this.assignPvToLab(e.PV_ID, 0, "Self");
         this.modalRef.hide();
         return;

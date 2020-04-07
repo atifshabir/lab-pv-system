@@ -165,7 +165,7 @@ mongoose.connect(mongoConnectionString, async function(){
 
     await new MachineInfo({
       lab_id: 4,
-      pr1: 0,
+      pr1: 1,
       pr2: 0,
       dr1: 0,
       dr2: 0,
