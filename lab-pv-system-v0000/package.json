@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start_sec": "ng serve --open --host=192.168.1.110 --ssl --ssl-key ssl_cert\\lan_ip\\lan_ip.key  --ssl-cert ssl_cert\\lan_ip\\lan_ip.crt",
+    "start": "ng serve --open",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

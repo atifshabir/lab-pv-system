@@ -4,6 +4,12 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const http = require("http");
 
+const https = require('https');
+const fs = require('fs');
+const privateKey  = fs.readFileSync('ssl_cert/lan_ip/lan_ip.key', 'utf8');
+const certificate = fs.readFileSync('ssl_cert/lan_ip/lan_ip.crt', 'utf8');
+
+const credentials = {key: privateKey, cert: certificate};
 
 const EgcrInfo = require('./backend/models/egcr-info');
 const Lab = require('./backend/models/lab');
@@ -56,8 +62,15 @@ const onError = error => {
   }
 };
 
+/*
 const onListening = () => {
   const addr = server.address();
+  const bind = typeof port === "string" ? "pipe " + port : "port " + port;
+  console.log("Listening on " + bind);
+};
+*/
+const onListening = () => {
+  const addr = httpsServer.address();
   const bind = typeof port === "string" ? "pipe " + port : "port " + port;
   console.log("Listening on " + bind);
 };
@@ -209,7 +222,14 @@ mongoose.connection.once('open', function () {
 const port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
 
+const httpsServer = https.createServer(credentials, app);
+httpsServer.on("error", onError);
+httpsServer.on("listening", onListening);
+httpsServer.listen(18443);
+
+/*
 const server = http.createServer(app);
 server.on("error", onError);
 server.on("listening", onListening);
 server.listen(port);
+*/

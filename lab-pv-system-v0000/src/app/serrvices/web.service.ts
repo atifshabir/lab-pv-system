@@ -11,7 +11,11 @@ export class WebService {
   //base_url: string = "http://192.168.0.108:3000/"
 
   //base_url: string = "http://192.168.100.13:3000/"
-  base_url: string = "http://localhost:3000/"
+  //base_url: string = "http://localhost:3000/"
+
+  //base_url: string = "http://192.168.1.110:3000/"
+
+  base_url: string = "https://192.168.1.110:18443/"
 
   constructor(public http: HttpClient) { }
 
