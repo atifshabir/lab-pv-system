@@ -1,0 +1,2 @@
+1- On mobile-frontend:
+    When you click on a house that is not assigned to you you still are able to click "inspection ended". This should be enabled for only that pv which is assigned to that house

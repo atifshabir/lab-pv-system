@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 var https = require('follow-redirects').https;
 var fs = require('fs');
 const cors = require('cors');
+const path = require('path');
 
 var { google } = require("googleapis");
 var MESSAGING_SCOPE = "https://www.googleapis.com/auth/firebase.messaging";
@@ -34,6 +35,19 @@ app.use((req, res, next) => {
         "GET, POST, PATCH, DELETE, OPTIONS"
     );
     next();
+});
+
+app.use(express.static(path.join(__dirname, '../dist/lab-pv-system')));
+//app.use(express.static('../dist/lab-pv-system');
+
+app.get('/pc-frontend', (req, res) => {
+    console.log(req.url);
+    res.sendFile(path.join(__dirname, '../dist/lab-pv-system/index.html'));
+});
+
+app.get('/mobile-frontend', (req, res) => {
+    console.log(req.url);
+    res.sendFile(path.join(__dirname, '../dist/lab-pv-system/index.html'));
 });
 
 app.post("/api/send-notification", (req, res, next) => {
