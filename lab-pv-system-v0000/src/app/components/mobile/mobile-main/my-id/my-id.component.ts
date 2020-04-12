@@ -59,6 +59,7 @@ export class MyIdComponent implements OnInit {
       },
       err=>{
         console.log(err);
+        //elementInvalidNotif.innerHTML=error.code-caption;
       }
     );
   }

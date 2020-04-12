@@ -122,23 +122,24 @@ export class MapPanelComponent implements OnInit {
   }
 
   public invalidIDCount: number = 0;
-  
 
   getLocation() {
 
     var elementOpts = document.getElementById("dbgAtif1")! as HTMLInputElement;
-    
+
     if (navigator.geolocation) {
+
       console.log("Now getting loc");
       navigator.geolocation.getCurrentPosition(position => {
         console.log("loc gott");
-
-        //elementOpts.innerHTML = "loc success";
 
         this.dataService.myLat = position.coords.latitude;
         this.dataService.myLon = position.coords.longitude;
       }, error => {
         console.log("loc error: ", error.message);
+        //var dbgDisp = "log err " + this.dbgAtifGetLocCall.toString() + "," + error.code.toString();
+        var dbgDisp = error.message;
+        elementOpts.innerHTML = dbgDisp;
         //elementOpts.innerHTML = "locFail: " + error.code.toString();
       });
     }

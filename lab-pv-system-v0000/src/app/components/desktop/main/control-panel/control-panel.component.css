@@ -3,3 +3,12 @@
     background-position: 0 0, 6px 6px;
     background-size: 12px 12px;
 }
+
+.label_div {
+    background-color: blue;
+}
+
+.label_text {
+    color: white;
+    font-size: 12px;
+}
