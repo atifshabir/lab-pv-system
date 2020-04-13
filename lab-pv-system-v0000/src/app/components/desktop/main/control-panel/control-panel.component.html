@@ -1,8 +1,24 @@
 <div class="card ml-1 my-pattern" #cpanel style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;">
-      <div style="background-color: LightSteelBlue;">Control Panel</div>
-      <div class="label_div">
-        <p class="label_text" style="font-size: 20px">Label select <br></p>
-        <input type="checkbox" id="chkBoxShowNormalHouse" name="vehicle1" value="Bike">
-        <Label class="label_text">Normal House</Label>
-      </div>
+    <div style="background-color: LightSteelBlue;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      height: 60px;">
+        OPTIONS
+
+    </div>
+    <div class="label_div">
+        <p class="label_text" style="font-size: 18px; text-align: center;">Show labels<br></p>
+        <input type="checkbox" id="chkBoxShowNormalHouse" checked="true">
+        <Label class="label_text">Normal House</Label><br>
+        <input type="checkbox" id="chkBoxShowAlarmedHouse" checked="true">
+        <Label class="label_text">Alarmed House</Label><br>
+        <input type="checkbox" id="chkBoxShowNormalPV" checked="true">
+        <Label class="label_text">Normal PV</Label><br>
+        <input type="checkbox" id="chkBoxShowEngagedPV" checked="true">
+        <Label class="label_text">Engaged PV</Label><br>
+    </div>
+
+    <button class="recenter_button" type="button" id="btnRecenterMap">RECENTER MAP</button>
+
 </div>

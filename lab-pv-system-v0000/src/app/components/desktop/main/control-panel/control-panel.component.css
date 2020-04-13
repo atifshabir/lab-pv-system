@@ -1,14 +1,31 @@
-.my-pattern{
+.my-pattern {
     background-color: LightSteelBlue;
     background-position: 0 0, 6px 6px;
     background-size: 12px 12px;
 }
 
 .label_div {
-    background-color: blue;
+    background-color: darkslategray;
+    /*border-style: dotted;*/
+    border-color: dimgray;
+    width: 96%;
+    position: absolute;
+    left: 2%;
+    top: 10%;
+    border-radius: 4%;
 }
 
 .label_text {
     color: white;
     font-size: 12px;
+}
+
+.recenter_button {
+    font-size: 14px;
+    color: lightyellow;
+    background-color: midnightblue;
+    position: absolute;
+    top: 85%;
+    border-radius: 30%;
+    margin: 4px 2px;
 }
