@@ -8,6 +8,7 @@ import { EGCR_Info } from 'src/app/models/model.egcr-info';
 import { DataService } from 'src/app/serrvices/data.service';
 import { MessagingService } from 'src/app/serrvices/messaging.service';
 import { WebService } from 'src/app/serrvices/web.service';
+import { MapPanelParams } from 'src/app/components/desktop/main/map-panel/map-panel-params';
 
 
 @Component({
@@ -17,7 +18,7 @@ import { WebService } from 'src/app/serrvices/web.service';
 })
 export class MapPanelComponent implements OnInit {
 
-  
+
   @Input() isMobile: Boolean = false;
 
 
@@ -58,9 +59,12 @@ export class MapPanelComponent implements OnInit {
 
   message: any;
 
+  mapPanelParams: MapPanelParams;
+
 
   constructor(private modalService: BsModalService, public route: ActivatedRoute, public dataService: DataService, private msgService: MessagingService, public webService: WebService) {
 
+    this.mapPanelParams = new MapPanelParams();
     //getting lat, lon and zoom from parameters if present
     this.route.params.subscribe(params => {
       if(params['lat']){
@@ -72,7 +76,7 @@ export class MapPanelComponent implements OnInit {
         if(params['zoom']){
           this.Zoom = Number(params['zoom']);
           //console.log("zoom: "+this.Zoom);
-        } 
+        }
       }
     });
   }
@@ -81,11 +85,60 @@ export class MapPanelComponent implements OnInit {
     this.msgService.getPermission();
     this.msgService.receiveMessage();
     this.message = this.msgService.currentMessage;
+    this.dataService.ctrlPanelMsgSrc$.subscribe(
+      msg => {
+        //console.log(msg);
+        //alert(msg);
+        this.HandleMsgFromCtrlPanelComp(msg);
+      }
+    )
+  }
+
+  HandleMsgFromCtrlPanelComp(msg: String) {
+    //console.log(msg);
+    //alert(msg);
+
+    if(msg == 'ShowNormalHouse') {
+      this.mapPanelParams.showNormalHouse = true;
+    } else if(msg == 'DontShowNormalHouse') {
+      this.mapPanelParams.showNormalHouse = false;
+    } else if(msg == 'ShowAlarmedHouse') {
+      this.mapPanelParams.showAlarmedHouse = true;
+    } else if(msg == 'DontShowAlarmedHouse') {
+      this.mapPanelParams.showAlarmedHouse = false;
+    } else if(msg == 'ShowNormalPV') {
+      this.mapPanelParams.showNormalPV = true;
+    } else if(msg == 'DontShowNormalPV') {
+      this.mapPanelParams.showNormalPV = false;
+    } else if(msg == 'ShowEngagedPV') {
+      this.mapPanelParams.showEngagedPV = true;
+    } else if(msg == 'DontShowEngagedPV') {
+      this.mapPanelParams.showEngagedPV = false;
+    } else if(msg == 'RecenterMap') {
+      this.RecenterMap();
+    } else {
+      console.log("Invalid Message from ctrl-panel to map-panel: " + msg);
+      alert("Invalid Message from ctrl-panel to map-panel: " + msg);
+    }
+
+    this.refreshMarkers(); //TODO: This should be placed in a good check
+
+    /*
+    console.log(this.mapPanelParams.showNormalHouse + "," +
+                this.mapPanelParams.showAlarmedHouse + "," +
+                this.mapPanelParams.showNormalPV + "," +
+                this.mapPanelParams.showEngagedPV);
+    */
+  }
+
+  RecenterMap() {
+    //console.log("Going to recenter");
+    this.map.setCenter({ lat: this.Lat.valueOf(), lng: this.Lon.valueOf() });
   }
 
   ngAfterViewInit() {
     //console.log(this.gmapElement);
-    
+
 
     var mapProp = {
       center: new google.maps.LatLng(this.Lat, this.Lon),
@@ -93,7 +146,7 @@ export class MapPanelComponent implements OnInit {
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
-    
+
     this.createMarkers();
 
 
@@ -106,7 +159,7 @@ export class MapPanelComponent implements OnInit {
   updateLocAfterFreshPVData: boolean = false;
   dataPoll(){
     //console.log("pv assign: "+this.dataService.pvAssignInProgress);
-    
+
     if(!this.dataService.pvAssignInProgress){
       /*
       if(this.isMobile){
@@ -115,7 +168,7 @@ export class MapPanelComponent implements OnInit {
       */
       this.getDataCount ++;
       this.updateLocAfterFreshPVData = true;
-      console.log("Get data called ", this.getDataCount, " times");
+      //console.log("Get data called ", this.getDataCount, " times");
       this.getData();
     }
     setTimeout(this.dataPoll.bind(this), this.pollTime*1000);
@@ -161,7 +214,7 @@ export class MapPanelComponent implements OnInit {
 
     var e = this.pvInfo.find(x => x.PV_ID === this.dataService.myPvID);
 
-    
+
     if(e == null) {
       console.log("Atif_pvID. Couldnot find pvID " , this.invalidIDCount, "times");
       this.invalidIDCount ++;
@@ -170,7 +223,7 @@ export class MapPanelComponent implements OnInit {
       }
       return;
     }
-    
+
     console.log("AtifLoc_02. ", this.dataService.myLat, ",", this.dataService.myLon);
 
     this.dataService.updatePvInfo({
@@ -243,7 +296,7 @@ export class MapPanelComponent implements OnInit {
     );
 
 
-    // adding to pvInfo array 
+    // adding to pvInfo array
     /*
     this.pvInfo.push(new PVInfo(90, 34.0494611, -118.2636114, 0, "CCR"));
     this.pvInfo.push(new PVInfo(91, 34.0359263, -118.2479044, 0, "CCR"));
@@ -262,15 +315,15 @@ export class MapPanelComponent implements OnInit {
           this.sendMyLocationUpdate();
           this.updateLocAfterFreshPVData = false;
         }
-        
+
        this.dbgAtifPVInfoUpdate ++;
-       console.log("PV info update.... ", this.dbgAtifPVInfoUpdate, " times")
+       //console.log("PV info update.... ", this.dbgAtifPVInfoUpdate, " times")
       },
       err=>{
         console.log(err);
       }
     );
-    
+
 
     // adding to egcrInfo array
     /*
@@ -354,13 +407,19 @@ export class MapPanelComponent implements OnInit {
       var iconCfg;
       if(assigned){
         // creating red star
+        if(this.mapPanelParams.showAlarmedHouse == false) {
+          return;
+        }
         iconCfg = {
-          
+
 		  url: 'assets/icons/alarm_lab.gif',
           anchor: new google.maps.Point(20, 20)
         };
       } else {
         // creating blue star
+        if(this.mapPanelParams.showNormalHouse == false) {
+          return;
+        }
         iconCfg = {
 		  url: 'assets/icons/blue_lab.gif',
           anchor: new google.maps.Point(20, 20)
@@ -385,14 +444,14 @@ export class MapPanelComponent implements OnInit {
         });
       }
       */
-      
+
       newCreatedMarker.addListener('click', (ev)=> {
 
         if(this.dataService.pvAssignInProgress){
           this.assignPvToLab(this.dataService.pvAssignId, parseInt(newCreatedMarker.getTitle().toString()), "CCR");
           return;
         }
-      
+
         var labMachineId = parseInt(newCreatedMarker.getTitle().toString());
 
         this.labMachineInfo.forEach((checkRec)=>{
@@ -407,10 +466,10 @@ export class MapPanelComponent implements OnInit {
         })
 
         if(this.isMobile){
-          // if it's mobile then showing info in model 
+          // if it's mobile then showing info in model
           this.openModal(this.infoTemplate);
-        } 
-        
+        }
+
         ev.stop();
       });
 
@@ -435,6 +494,9 @@ export class MapPanelComponent implements OnInit {
 
       if(assigned){
         // creating red triangle marker
+        if(this.mapPanelParams.showEngagedPV == false) {
+          return;
+        }
         iconCfg = {
           url: 'assets/icons/alarm_pv.gif',
           anchor: new google.maps.Point(20, 20)
@@ -449,6 +511,9 @@ export class MapPanelComponent implements OnInit {
 
       } else {
         // creating blue triangle marker
+        if(this.mapPanelParams.showNormalPV == false) {
+          return;
+        }
         iconCfg = {
           url: 'assets/icons/blue_pv.gif',
           anchor: new google.maps.Point(20, 20)
@@ -478,7 +543,7 @@ export class MapPanelComponent implements OnInit {
           alert("Unabled to select PV due to assignment in progress");
           return;
         }
-      
+
         var pvId = parseInt(newCreatedMarker.getTitle().toString());
 
         this.pvInfo.forEach((checkRec)=>{
@@ -493,10 +558,10 @@ export class MapPanelComponent implements OnInit {
         })
 
         if(this.isMobile){
-          // if it's mobile then showing info in model 
+          // if it's mobile then showing info in model
           this.openModal(this.infoTemplate);
-        } 
-        
+        }
+
         ev.stop();
       });
 
@@ -556,7 +621,7 @@ export class MapPanelComponent implements OnInit {
 
   refreshMarkers(){
     //removing old markers
-    
+
     this.labMachineInfoMarkers.forEach((e)=>{
       e.setMap(null);
     });
@@ -625,7 +690,7 @@ export class MapPanelComponent implements OnInit {
       this.getData();
     });
 
-    
+
     //alert("Assigned");
     //await this.refreshMarkers();
     this.dataService.pvAssignInProgress = false;
@@ -637,17 +702,17 @@ export class MapPanelComponent implements OnInit {
   getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
     var R = 6371; // Radius of the earth in km
     var dLat = this.deg2rad(lat2-lat1);  // deg2rad below
-    var dLon = this.deg2rad(lon2-lon1); 
-    var a = 
+    var dLon = this.deg2rad(lon2-lon1);
+    var a =
       Math.sin(dLat/2) * Math.sin(dLat/2) +
-      Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) * 
+      Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) *
       Math.sin(dLon/2) * Math.sin(dLon/2)
-      ; 
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+      ;
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     var d = R * c; // Distance in km
     return d;
   }
-  
+
   deg2rad(deg) {
     return deg * (Math.PI/180)
   }

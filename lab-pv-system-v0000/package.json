@@ -3,13 +3,14 @@
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
-        "start_sec": "ng serve --open --host=192.168.100.34 --ssl --ssl-key ssl_cert\\from_linux\\selfsigned.key  --ssl-cert ssl_cert\\from_linux\\selfsigned.crt",
+        "start_sec": "ng serve --open --host=192.168.100.37 --ssl --ssl-key ssl_cert\\from_linux\\selfsigned.key  --ssl-cert ssl_cert\\from_linux\\selfsigned.crt",
         "start": "ng serve --open",
         "build": "ng build",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "start:server": "nodemon server.js"
+        "start:server": "nodemon server.js",
+        "start:server_http": "nodemon server_http.js"
     },
     "private": true,
     "dependencies": {
@@ -29,7 +30,7 @@
         "bootstrap": "^4.4.1",
         "cors": "^2.8.5",
         "express": "^4.17.1",
-        "firebase": "^7.11.0",
+        "firebase": "^7.14.0",
         "googleapis": "^48.0.0",
         "jquery": "^3.4.1",
         "mongoose": "^5.9.3",

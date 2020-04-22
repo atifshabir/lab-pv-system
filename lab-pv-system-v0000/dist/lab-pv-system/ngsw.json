@@ -1,0 +1,104 @@
+{
+  "configVersion": 1,
+  "timestamp": 1587146626526,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "/favicon.ico",
+        "/firebase-messaging-sw.js",
+        "/index.html",
+        "/main-es2015.00c7fb288aa614d00f5b.js",
+        "/main-es5.00c7fb288aa614d00f5b.js",
+        "/manifest.webmanifest",
+        "/polyfills-es2015.442fa3cc45520cc0d518.js",
+        "/polyfills-es5.abdd41dcd206a6689f72.js",
+        "/runtime-es2015.0811dcefd377500b5b1a.js",
+        "/runtime-es5.0811dcefd377500b5b1a.js",
+        "/scripts.463e420e5d947f5f75a6.js",
+        "/styles.12cb6591588663037176.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [
+        "/assets/icons/alarm_lab.gif",
+        "/assets/icons/alarm_pv.gif",
+        "/assets/icons/blue_lab.gif",
+        "/assets/icons/blue_pv.gif",
+        "/assets/icons/blue_star.png",
+        "/assets/icons/blue_triangle.png",
+        "/assets/icons/egcr.gif",
+        "/assets/icons/icon-128x128.png",
+        "/assets/icons/icon-144x144.png",
+        "/assets/icons/icon-152x152.png",
+        "/assets/icons/icon-192x192.png",
+        "/assets/icons/icon-384x384.png",
+        "/assets/icons/icon-512x512.png",
+        "/assets/icons/icon-72x72.png",
+        "/assets/icons/icon-96x96.png",
+        "/assets/icons/rectangle.png",
+        "/assets/icons/red_star.png",
+        "/assets/icons/red_triangle.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/assets/icons/alarm_lab.gif": "d9896c81f81d5344ee852d617386a3666a2974b4",
+    "/assets/icons/alarm_pv.gif": "9e8d945160e9593f8d4e432f25fb0ee6eaae4646",
+    "/assets/icons/blue_lab.gif": "de86ee940ffb708540385b63ac20b5ecbacb1a1f",
+    "/assets/icons/blue_pv.gif": "a9914d247b8b66a6caa529da711093e50d307cb5",
+    "/assets/icons/blue_star.png": "852ec8a959216b5c09a0258d5ac0e63d47ad8d0e",
+    "/assets/icons/blue_triangle.png": "218560c2a4d4029c1e594734f7257b495639f35f",
+    "/assets/icons/egcr.gif": "54f444b1eeeb7693cd848155706e6496c0a9b00e",
+    "/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
+    "/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
+    "/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
+    "/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
+    "/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
+    "/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
+    "/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
+    "/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "/assets/icons/rectangle.png": "5917d22f644519e9e876f2531d1a3828eabe8294",
+    "/assets/icons/red_star.png": "94332a8947df8ce68c44c5dfedf333a66028f7bb",
+    "/assets/icons/red_triangle.png": "77db4eda12306cf24b758204ca094e48976c5451",
+    "/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
+    "/firebase-messaging-sw.js": "40cc872b3af1433bf635ea33fb1246d1acf7a772",
+    "/index.html": "99431437a1fffdd4f21be823ade566a49e3dd20b",
+    "/main-es2015.00c7fb288aa614d00f5b.js": "d84261e261d38c705be6cb29041fe2190c5236d8",
+    "/main-es5.00c7fb288aa614d00f5b.js": "896b3e4f81a008aa991f1cf0fce679655950a038",
+    "/manifest.webmanifest": "71f505afb1ca7159ba9b8ed82b996955c0b9c79c",
+    "/polyfills-es2015.442fa3cc45520cc0d518.js": "8779ed8d9bf0580e1b50b352a9b8fd520be24433",
+    "/polyfills-es5.abdd41dcd206a6689f72.js": "8d03638471d7374e81cf33adfdea439f84ac3873",
+    "/runtime-es2015.0811dcefd377500b5b1a.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
+    "/runtime-es5.0811dcefd377500b5b1a.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
+    "/scripts.463e420e5d947f5f75a6.js": "44a583f66a9093a88d872a731b2c41a8947c7030",
+    "/styles.12cb6591588663037176.css": "01333a7ff42d9fea68435d72b6ad450b22d62eeb"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}

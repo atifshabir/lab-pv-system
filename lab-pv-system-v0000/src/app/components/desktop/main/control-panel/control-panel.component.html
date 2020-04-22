@@ -9,16 +9,16 @@
     </div>
     <div class="label_div">
         <p class="label_text" style="font-size: 18px; text-align: center;">Show labels<br></p>
-        <input type="checkbox" id="chkBoxShowNormalHouse" checked="true">
+        <input type="checkbox" id="chkBoxShowNormalHouse" checked="true" (click)="onClickChkBoxShowNormalHouse()">
         <Label class="label_text">Normal House</Label><br>
-        <input type="checkbox" id="chkBoxShowAlarmedHouse" checked="true">
+        <input type="checkbox" id="chkBoxShowAlarmedHouse" checked="true" (click)="onClickChkBoxShowAlarmedHouse()">
         <Label class="label_text">Alarmed House</Label><br>
-        <input type="checkbox" id="chkBoxShowNormalPV" checked="true">
+        <input type="checkbox" id="chkBoxShowNormalPV" checked="true" (click)="onClickChkBoxShowNormalPV()">
         <Label class="label_text">Normal PV</Label><br>
-        <input type="checkbox" id="chkBoxShowEngagedPV" checked="true">
+        <input type="checkbox" id="chkBoxShowEngagedPV" checked="true" (click)="onClickChkBoxShowEngagedPV()">
         <Label class="label_text">Engaged PV</Label><br>
     </div>
 
-    <button class="recenter_button" type="button" id="btnRecenterMap">RECENTER MAP</button>
+    <button class="recenter_button" type="button" id="btnRecenterMap" (click)="onClickBtnRecenter()">RECENTER MAP</button>
 
 </div>

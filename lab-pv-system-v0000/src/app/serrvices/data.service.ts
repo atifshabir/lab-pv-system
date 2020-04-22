@@ -2,12 +2,16 @@ import { Injectable } from '@angular/core';
 import { LabMachineInfo } from '../models/lab-machine-info';
 import { PVInfo } from '../models/model.pv-info';
 import { WebService } from './web.service';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
+  //For communication from control panel to other compononents
+  private _ctrlPanelMsgSrc = new Subject<String>();
+  ctrlPanelMsgSrc$ = this._ctrlPanelMsgSrc.asObservable();
   //For initial pvIDs
   myPvID: number = 0; //PV-ID of this user
 
@@ -33,6 +37,9 @@ export class DataService {
 
   constructor(public webService: WebService) { }
 
+  sendCtrlPanelMsg(msg: string) {
+    this._ctrlPanelMsgSrc.next(msg);
+  }
 
   getLabInfo(){
     return this.webService.getLabInfo();
