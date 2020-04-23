@@ -1,0 +1,13 @@
+.info_heading {
+    float: left;
+    width: 50%;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.nemud_logo {
+    float: right;
+    width: 50%;
+    text-align: right;
+}

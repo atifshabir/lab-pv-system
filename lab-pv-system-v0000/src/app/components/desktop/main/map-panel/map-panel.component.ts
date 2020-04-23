@@ -28,10 +28,12 @@ export class MapPanelComponent implements OnInit {
   map: google.maps.Map // map reference for later
 
   // DEFAULT LAT LON OF CITY Los Angeles if no param is given
-  Lat: number = 34.0482809;
-  Lon: number = -118.2437;
-  Zoom: number = 12;
-
+  //Lat: number = 34.0482809;
+  //Lon: number = -118.2437;
+  //Zoom: number = 12;
+  Lat: number = 33.571735;
+  Lon: number = 73.144699;
+  Zoom: number = 16;
   //
 
   pollTime: number = 3; // time in seconds to sync with db

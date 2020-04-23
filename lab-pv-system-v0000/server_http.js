@@ -94,6 +94,188 @@ mongoose.connect(mongoConnectionString, async function() {
             console.log('pvinfos dropped');
         });
 
+        //EGCR2
+        await new EgcrInfo({
+            lat: 33.568383,
+            lon: 73.138788
+        }).save();
+
+        //EGCR1
+        await new EgcrInfo({
+            lat: 33.575337,
+            lon: 73.152188
+        }).save();
+
+        //Block-B, street 1
+        await new PvInfo({
+            lat: 33.569929,
+            lon: 73.139711,
+            lab_id: 0,
+            lab_order: "CCR"
+        }).save();
+
+        //RoadNo3
+        await new PvInfo({
+            lat: 33.569089,
+            lon: 73.146105,
+            lab_id: 0,
+            lab_order: "CCR"
+        }).save();
+
+        //RoadNo1
+        await new PvInfo({
+            lat: 33.571216,
+            lon: 73.149624,
+            lab_id: 0,
+            lab_order: "CCR"
+        }).save();
+
+        //ALARMED HOUSE. Block-A, street 13
+        await new Lab({
+            lat: 33.572289,
+            lon: 73.142414,
+            city: "Los Angeles",
+            area: "1331",
+            phase: "W",
+            st: "7",
+            s_st: " ",
+            building: "12",
+            floor: "1st"
+        }).save();
+
+
+        //NOMAL HOUSE Block-C, street 39
+        await new Lab({
+            lat: 33.567909,
+            lon: 73.141856,
+            city: "Los Angeles",
+            area: "1331",
+            phase: "W",
+            st: "7",
+            s_st: " ",
+            building: "12",
+            floor: "1st"
+        }).save();
+
+        //ALARMED HOUSE. Block-D-Ext, street 1, lan-17A
+        await new Lab({
+            lat: 33.571788,
+            lon: 73.153143,
+            city: "Los Angeles",
+            area: "1331",
+            phase: "W",
+            st: "7",
+            s_st: " ",
+            building: "12",
+            floor: "1st"
+        }).save();
+
+        //NORMAL HOUSE Block-C, street 44
+        await new Lab({
+            lat: 33.566568,
+            lon: 73.144753,
+            city: "Los Angeles",
+            area: "1331",
+            phase: "W",
+            st: "7",
+            s_st: " ",
+            building: "12",
+            floor: "1st"
+        }).save();
+
+        //NORMAL HOUSE Block-B, street 2
+        await new Lab({
+            lat: 33.575310,
+            lon: 73.148100,
+            city: "Los Angeles",
+            area: "1331",
+            phase: "W",
+            st: "7",
+            s_st: " ",
+            building: "12",
+            floor: "1st"
+        }).save();
+
+        //NORMAL HOUSE Block-D, street 28
+        await new Lab({
+            lat: 33.570483,
+            lon: 73.146813,
+            city: "Los Angeles",
+            area: "1331",
+            phase: "W",
+            st: "7",
+            s_st: " ",
+            building: "12",
+            floor: "1st"
+        }).save();
+
+        await new MachineInfo({
+            lab_id: 1,
+            pr1: 1,
+            pr2: 0,
+            dr1: 0,
+            dr2: 0,
+            ss: 0
+        }).save();
+
+        await new MachineInfo({
+            lab_id: 2,
+            pr1: 0,
+            pr2: 0,
+            dr1: 0,
+            dr2: 0,
+            ss: 0
+        }).save();
+
+        await new MachineInfo({
+            lab_id: 3,
+            pr1: 1,
+            pr2: 0,
+            dr1: 1,
+            dr2: 0,
+            ss: 0
+        }).save();
+
+        await new MachineInfo({
+            lab_id: 4,
+            pr1: 0,
+            pr2: 0,
+            dr1: 0,
+            dr2: 0,
+            ss: 0
+        }).save();
+
+        await new MachineInfo({
+            lab_id: 5,
+            pr1: 0,
+            pr2: 0,
+            dr1: 0,
+            dr2: 0,
+            ss: 0
+        }).save();
+
+        await new MachineInfo({
+            lab_id: 6,
+            pr1: 0,
+            pr2: 0,
+            dr1: 0,
+            dr2: 0,
+            ss: 0
+        }).save();
+
+        /*
+        await new Lab({
+          lat: 34.0507194,
+          lon: -118.2688471,
+          city: "Los Angeles",
+          area: "1331",
+          phase: "W",
+          st: "7",
+          s_st: " ",
+          building: "12",
+          floor: "1st"
+      }).save();
+
         await new Lab({
             lat: 34.0507194,
             lon: -118.2688471,
@@ -205,7 +387,9 @@ mongoose.connect(mongoConnectionString, async function() {
             lab_id: 0,
             lab_order: "Self"
         }).save();
+        */
     }
+
 });
 
 mongoose.connection.on('error', console.error.bind(console, 'Database connection error:'));

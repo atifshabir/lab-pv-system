@@ -1,87 +1,137 @@
-<div class="card" #ipanel>
-    <div class="card-body" style="background-color:DarkCyan;">
+<div class="card" style="border: maroon; border-style: solid;" #ipanel>
+    <div class="card-body " style="background-color:DarkCyan;">
 
-      <div *ngIf="!this.dataService.infoPresent" style="background-color:DarkCyan;">
-        <h5 style="color:FloralWhite;">Select House or PV to view details</h5>
-      </div>
+        <div *ngIf="!this.dataService.infoPresent " style="background-color:black; width: 100%;">
+            <!--p style="color:FloralWhite; ">Click on House or PV icons to view details</p-->
+            <p class="info_heading">Click on any House or PV icon to view details</p>
+            <p class="nemud_logo">SMART MUHAFIZ - by NEMUD TECHNOLOGIES</p>
+        </div>
+        <div class="row " *ngIf="!this.dataService.infoPresent " style="width: 100%;">
+            <div class="col-12 ">
+                <div class="table-responsive ">
+                    <table class="table table-sm table-dark ">
+                        <thead>
+                            <tr>
+
+                                <th scope="col ">HSS-ID</th>
+                                <th scope="col ">City</th>
+                                <th scope="col ">Area</th>
+                                <th scope="col ">Phase</th>
+                                <th scope="col ">Street</th>
+                                <th scope="col ">Sub-Street</th>
+                                <th scope="col ">Building</th>
+                                <th scope="col ">Floor</th>
+                                <th scope="col ">PR1</th>
+                                <th scope="col ">PR2</th>
+                                <th scope="col ">DR1</th>
+                                <th scope="col ">DR2</th>
+                                <th scope="col ">SS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>xxx</td>
+                                <td>xxx</td>
+                                <td>xxx</td>
+                                <td>xxx</td>
+                                <td>xxx</td>
+                                <td>xxx</td>
+                                <td>xxx</td>
+                                <td>xxx</td>
+                                <td>xxx</td>
+                                <td>xxx</td>
+                                <td>xxx</td>
+                                <td>xxx</td>
+                                <td>xxx</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
 
-      <div class="row" *ngIf="this.dataService.infoPresent && this.dataService.pvInfo">
-        <h5 style="color:FloralWhite;">Patrol-Vehicle Information</h5>
-      </div>
+        <div class="row " *ngIf="this.dataService.infoPresent && this.dataService.pvInfo ">
+            <!--h5 style="color:FloralWhite; ">Patrol-Vehicle Information</h5-->
+            <p class="info_heading">Patrol-Vehicle Information</p>
+            <p class="nemud_logo">SMART MUHAFIZ - by NEMUD TECHNOLOGIES</p>
+        </div>
 
-      <div *ngIf="this.dataService.infoPresent && this.dataService.pvInfo" #machineInfo class="row">
-        
-          <div class="col-12">
-            <div class="table-responsive">
-            <table class="table table-sm table-dark">
-                <thead>
-                  <tr>
-                    
-                    <th scope="col">PV-ID</th>
-                    <th scope="col">LAB-ID</th>
-                    <th scope="col">LAB ORDER</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{{this.dataService.selectedPv.PV_ID}}</td>
-                    <td>{{this.dataService.selectedPv.LAB_ID}}</td>
-                    <td>{{this.dataService.selectedPv.LAB_order}}</td>
-                  </tr>
-                  
-                </tbody>
-              </table>
-              </div>
-          </div>
-      </div>
+        <div *ngIf="this.dataService.infoPresent && this.dataService.pvInfo " #machineInfo class="row ">
 
-      <div class="row" *ngIf="this.dataService.infoPresent && this.dataService.labMachineInfo">
-        <h5 style="color:FloralWhite;">House Information</h5>
-      </div>
-      <div class="row" *ngIf="this.dataService.infoPresent && this.dataService.labMachineInfo">
-          <div class="col-12">
-            <div class="table-responsive">
-            <table class="table table-sm table-dark">
-                <thead>
-                  <tr>
-                    
-                    <th scope="col">HSS-ID</th>
-                    <th scope="col">City</th>
-                    <th scope="col">Area</th>
-                    <th scope="col">Phase</th>
-                    <th scope="col">Street</th>
-                    <th scope="col">Sub-Street</th>
-                    <th scope="col">Building</th>
-                    <th scope="col">Floor</th>
-                    <th scope="col">PR1</th>
-                    <th scope="col">PR2</th>
-                    <th scope="col">DR1</th>
-                    <th scope="col">DR2</th>
-                    <th scope="col">SS</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{{this.dataService.selectedLabMachine.LAB_ID}}</td>
-                    <td>{{this.dataService.selectedLabMachine.City}}</td>
-                    <td>{{this.dataService.selectedLabMachine.Area}}</td>
-                    <td>{{this.dataService.selectedLabMachine.Phase}}</td>
-                    <td>{{this.dataService.selectedLabMachine.St}}</td>
-                    <td>{{this.dataService.selectedLabMachine.S_ST}}</td>
-                    <td>{{this.dataService.selectedLabMachine.Building}}</td>
-                    <td>{{this.dataService.selectedLabMachine.Floor}}</td>
-                    <td>{{this.dataService.selectedLabMachine.PR1}}</td>
-                    <td>{{this.dataService.selectedLabMachine.PR2}}</td>
-                    <td>{{this.dataService.selectedLabMachine.DR1}}</td>
-                    <td>{{this.dataService.selectedLabMachine.DR2}}</td>
-                    <td>{{this.dataService.selectedLabMachine.SS}}</td>
-                  </tr>
-                  
-                </tbody>
-              </table>
-              </div>
-          </div>
-      </div>
+            <div class="col-12 ">
+                <div class="table-responsive ">
+                    <table class="table table-sm table-dark ">
+                        <thead>
+                            <tr>
+
+                                <th scope="col ">PV-ID</th>
+                                <th scope="col ">LAB-ID</th>
+                                <th scope="col ">LAB ORDER</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{this.dataService.selectedPv.PV_ID}}</td>
+                                <td>{{this.dataService.selectedPv.LAB_ID}}</td>
+                                <td>{{this.dataService.selectedPv.LAB_order}}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row " *ngIf="this.dataService.infoPresent && this.dataService.labMachineInfo ">
+            <!--h5 style="color:FloralWhite; ">House Information</h5-->
+            <p class="info_heading">House Information</p>
+            <p class="nemud_logo">SMART MUHAFIZ - by NEMUD TECHNOLOGIES</p>
+        </div>
+        <div class="row " *ngIf="this.dataService.infoPresent && this.dataService.labMachineInfo ">
+            <div class="col-12 ">
+                <div class="table-responsive ">
+                    <table class="table table-sm table-dark ">
+                        <thead>
+                            <tr>
+
+                                <th scope="col ">HSS-ID</th>
+                                <th scope="col ">City</th>
+                                <th scope="col ">Area</th>
+                                <th scope="col ">Phase</th>
+                                <th scope="col ">Street</th>
+                                <th scope="col ">Sub-Street</th>
+                                <th scope="col ">Building</th>
+                                <th scope="col ">Floor</th>
+                                <th scope="col ">PR1</th>
+                                <th scope="col ">PR2</th>
+                                <th scope="col ">DR1</th>
+                                <th scope="col ">DR2</th>
+                                <th scope="col ">SS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{this.dataService.selectedLabMachine.LAB_ID}}</td>
+                                <td>{{this.dataService.selectedLabMachine.City}}</td>
+                                <td>{{this.dataService.selectedLabMachine.Area}}</td>
+                                <td>{{this.dataService.selectedLabMachine.Phase}}</td>
+                                <td>{{this.dataService.selectedLabMachine.St}}</td>
+                                <td>{{this.dataService.selectedLabMachine.S_ST}}</td>
+                                <td>{{this.dataService.selectedLabMachine.Building}}</td>
+                                <td>{{this.dataService.selectedLabMachine.Floor}}</td>
+                                <td>{{this.dataService.selectedLabMachine.PR1}}</td>
+                                <td>{{this.dataService.selectedLabMachine.PR2}}</td>
+                                <td>{{this.dataService.selectedLabMachine.DR1}}</td>
+                                <td>{{this.dataService.selectedLabMachine.DR2}}</td>
+                                <td>{{this.dataService.selectedLabMachine.SS}}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
