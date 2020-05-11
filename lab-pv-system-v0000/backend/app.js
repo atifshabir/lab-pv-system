@@ -154,7 +154,8 @@ app.post("/api/machine-info/add", (req, res, next) => {
         pr2: req.body.pr2,
         dr1: req.body.dr1,
         dr2: req.body.dr2,
-        ss: req.body.ss
+        ss: req.body.ss,
+        monitor: req.body.monitor
     }).save();
 
     res.status(201).json({
@@ -210,6 +211,43 @@ app.post("/api/pv-info/update", (req, res, next) => {
         });
 });
 
+// Method to update machine-info
+app.post("/api/machine-info/update", (req, res, next) => {
+
+    /*
+
+    */
+    //console.log("update called");
+    const machineItem = {
+        "lab_id": req.body.lab_id,
+        "pr1": req.body.pr1,
+        "pr2": req.body.pr2,
+        "dr1": req.body.dr1,
+        "dr2": req.body.dr2,
+        "ss": req.body.ss,
+        "monitor": req.body.monitor
+    };
+
+    console.log(machineItem);
+
+    MachineInfo.findOneAndUpdate({ "lab_id": req.body.lab_id }, machineItem, { new: true })
+        .then(function(machine) {
+
+            console.log("Updated lab");
+            return res.status(200).json({
+                status: 200,
+                data: machine,
+                message: "Success"
+            });
+        })
+        .catch(function(err) {
+            console.log("Error in lab");
+            return res.status(400).json({
+                status: 400,
+                message: err.message
+            });
+        });
+});
 //-------------------------------
 
 

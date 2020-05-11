@@ -72,4 +72,13 @@ export class WebService {
     });
   }
 
+  updateMachineInfo(machine: any): Observable<any>{
+    let headers = new HttpHeaders();
+    headers = headers.append('Content-Type', 'application/json');
+    let body = JSON.stringify(machine);
+    return this.http.post(this.base_url+'api/machine-info/update' , body, {
+      headers: headers
+    });
+  }
+
 }

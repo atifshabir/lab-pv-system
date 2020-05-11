@@ -60,4 +60,8 @@ export class DataService {
   updatePvInfo(pv: any){
     return this.webService.updatePvInfo(pv);
   }
+
+  updateMachineInfo(machine: any){
+    return this.webService.updateMachineInfo(machine);
+  }
 }

@@ -18,6 +18,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireModule } from 'angularfire2';
 import { MyIdComponent } from './components/mobile/mobile-main/my-id/my-id.component';
+import { LcaMainComponent } from './components/lca/lca-main/lca-main.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { MyIdComponent } from './components/mobile/mobile-main/my-id/my-id.compo
     InformationPanelComponent,
     ControlPanelComponent,
     MobileMainComponent,
-    MyIdComponent
+    MyIdComponent,
+    LcaMainComponent
   ],
   imports: [
     BrowserModule,
