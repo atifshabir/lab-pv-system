@@ -216,7 +216,8 @@ mongoose.connect(mongoConnectionString, async function() {
             dr1: 0,
             dr2: 0,
             ss: 0,
-            monitor: 1
+            monitor: 1,
+            lastUpdatedBy: "lca"
         }).save();
 
         await new MachineInfo({
@@ -226,7 +227,8 @@ mongoose.connect(mongoConnectionString, async function() {
             dr1: 0,
             dr2: 0,
             ss: 0,
-            monitor: 1
+            monitor: 1,
+            lastUpdatedBy: "lca"
         }).save();
 
         await new MachineInfo({
@@ -236,7 +238,8 @@ mongoose.connect(mongoConnectionString, async function() {
             dr1: 1,
             dr2: 0,
             ss: 0,
-            monitor: 1
+            monitor: 1,
+            lastUpdatedBy: "lca"
         }).save();
 
         await new MachineInfo({
@@ -246,7 +249,8 @@ mongoose.connect(mongoConnectionString, async function() {
             dr1: 0,
             dr2: 0,
             ss: 0,
-            monitor: 1
+            monitor: 1,
+            lastUpdatedBy: "lca"
         }).save();
 
         await new MachineInfo({
@@ -256,7 +260,8 @@ mongoose.connect(mongoConnectionString, async function() {
             dr1: 0,
             dr2: 0,
             ss: 0,
-            monitor: 1
+            monitor: 1,
+            lastUpdatedBy: "lca"
         }).save();
 
         await new MachineInfo({
@@ -266,7 +271,8 @@ mongoose.connect(mongoConnectionString, async function() {
             dr1: 0,
             dr2: 0,
             ss: 0,
-            monitor: 1
+            monitor: 1,
+            lastUpdatedBy: "lca"
         }).save();
 
         /*

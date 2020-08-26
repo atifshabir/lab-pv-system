@@ -225,28 +225,62 @@ app.post("/api/machine-info/update", (req, res, next) => {
         "dr1": req.body.dr1,
         "dr2": req.body.dr2,
         "ss": req.body.ss,
-        "monitor": req.body.monitor
+        "monitor": req.body.monitor,
+        "lastUpdatedBy": req.body.lastUpdatedBy
     };
 
     console.log(machineItem);
 
-    MachineInfo.findOneAndUpdate({ "lab_id": req.body.lab_id }, machineItem, { new: true })
-        .then(function(machine) {
+    MachineInfo.find({ "lab_id": req.body.lab_id }).then(function(docs) {
+        console.log("Lab ID found");
+        var machineItemInDB = docs[0];
+        console.log("machine is ");
+        console.log(machineItemInDB);
 
-            console.log("Updated lab");
-            return res.status(200).json({
-                status: 200,
-                data: machine,
-                message: "Success"
+
+        if(machineItem.lastUpdatedBy == "lca") {
+            //Lock or unlock commands
+            console.log("Machine update msg from lca");
+            machineItemInDB.monitor = machineItem.monitor;
+            machineItemInDB.lastUpdatedBy = machineItem.lastUpdatedBy;
+    
+        } else if(machineItem.lastUpdatedBy == "devcom") {
+            //Alarm or beacone from devcom
+            console.log("Machine update msg from devcom");
+            machineItemInDB.pr1 = machineItem.pr1;
+            machineItemInDB.pr2 = machineItem.pr2;
+            machineItemInDB.dr1 = machineItem.dr1;
+            machineItemInDB.ss = machineItem.ss;
+            machineItemInDB.lastUpdatedBy = machineItem.lastUpdatedBy;
+        }
+
+        MachineInfo.findOneAndUpdate({ "lab_id": req.body.lab_id }, machineItemInDB, { new: true })
+            .then(function(machine) {
+
+                console.log("Updated lab");
+                return res.status(200).json({
+                    status: 200,
+                    data: machine,
+                    message: "Success"
+                });
+            })
+            .catch(function(err) {
+                console.log("Error in machine update");
+                return res.status(400).json({
+                    status: 400,
+                    message: err.message
+                });
             });
-        })
-        .catch(function(err) {
-            console.log("Error in lab");
-            return res.status(400).json({
-                status: 400,
-                message: err.message
-            });
+
+    })
+    .catch(function(err) {
+        console.log("Error in machine update");
+        return res.status(400).json({
+            status: 400,
+            message: err.message
         });
+    });
+
 });
 //-------------------------------
 

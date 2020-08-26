@@ -7,7 +7,8 @@ const machineInfoSchema = mongoose.Schema({
     dr1: { type: Number, required: true},
     dr2: { type: Number, required: true},
     ss: { type: Number, required: true},
-    monitor: { type: Number, required: true}
+    monitor: { type: Number, required: true},
+    lastUpdatedBy: { type: String, required: true}
 });
 
 module.exports = mongoose.model('MachineInfo', machineInfoSchema);

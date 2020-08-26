@@ -23,7 +23,8 @@ export class LcaMainComponent implements OnInit {
       dr1: 0,
       dr2: 0,
       ss: 0,
-      monitor: 1
+      monitor: 1,
+      lastUpdatedBy: "lca"
     }).subscribe( async data=>{
       //console.log(data);
       var notificationTitle = "New PV Assignment";
@@ -42,7 +43,8 @@ export class LcaMainComponent implements OnInit {
       dr1: 0,
       dr2: 0,
       ss: 0,
-      monitor: 0
+      monitor: 0,
+      lastUpdatedBy: "lca"
     }).subscribe( async data=>{
       //console.log(data);
       var notificationTitle = "New PV Assignment";
@@ -54,14 +56,16 @@ export class LcaMainComponent implements OnInit {
   onClick_BtnTrigger() {
     console.log("Trigger button pressed");
     var elementInpMyMachineID = document.getElementById("myMachineID")! as HTMLInputElement;
+    var elementInpMyPR1 = document.getElementById("myPR1")! as HTMLInputElement;
     this.dataService.updateMachineInfo({
       lab_id: Number(elementInpMyMachineID.value),
-      pr1: 1,
+      pr1: Number(elementInpMyPR1.value),
       pr2: 0,
       dr1: 0,
       dr2: 0,
       ss: 0,
-      monitor: 1
+      monitor: 0,
+      lastUpdatedBy: "devcom"
     }).subscribe( async data=>{
       //console.log(data);
       var notificationTitle = "New PV Assignment";
