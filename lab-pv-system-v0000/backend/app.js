@@ -251,6 +251,7 @@ app.post("/api/machine-info/update", (req, res, next) => {
             machineItemInDB.pr2 = machineItem.pr2;
             machineItemInDB.dr1 = machineItem.dr1;
             machineItemInDB.ss = machineItem.ss;
+            machineItemInDB.monitor = machineItem.monitor;
             machineItemInDB.lastUpdatedBy = machineItem.lastUpdatedBy;
         }
 

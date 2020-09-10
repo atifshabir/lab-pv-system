@@ -32,7 +32,7 @@
         "express": "^4.17.1",
         "firebase": "^7.14.0",
         "googleapis": "^48.0.0",
-        "jquery": "^3.4.1",
+        "jquery": "^3.5.1",
         "mongoose": "^5.9.3",
         "mongoose-sequence": "^5.2.2",
         "ngx-bootstrap": "^5.3.2",
@@ -42,7 +42,7 @@
         "zone.js": "~0.10.2"
     },
     "devDependencies": {
-        "@angular-devkit/build-angular": "~0.900.2",
+        "@angular-devkit/build-angular": "^0.1000.8",
         "@angular/cli": "~9.0.2",
         "@angular/compiler-cli": "~9.0.1",
         "@angular/language-service": "~9.0.1",

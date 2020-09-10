@@ -278,7 +278,7 @@ export class MapPanelComponent implements OnInit {
             tempLab.forEach(lab => {
               tempMachine.forEach(machine => {
                 //console.log(machine);
-                if(lab.lab_id == machine.lab_id){
+                if(lab.lab_id == machine.lab_id && machine.monitor == 1) {
                   this.labMachineInfo.push(new LabMachineInfo(lab.lab_id, lab.lat, lab.lon, lab.city, lab.area, lab.phase, lab.st, lab.s_st, lab.building, lab.floor, machine.pr1, machine.pr2, machine.dr1, machine.dr2, machine.ss));
                   //console.log("found_labmachine");
                   this.refreshMarkers();
