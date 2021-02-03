@@ -64,4 +64,20 @@ export class DataService {
   updateMachineInfo(machine: any){
     return this.webService.updateMachineInfo(machine);
   }
+
+  AddLabInfo(lab: any){
+    return this.webService.AddLabInfo(lab);
+  }
+
+  updateLabInfo(lab: any){
+    return this.webService.updateLabInfo(lab);
+  }
+
+  DeleteLabInfo(lab: any){
+    return this.webService.DeleteLabInfo(lab);
+  }
+
+  AddMachineInfo(machine: any){
+    return this.webService.AddMachineInfo(machine);
+  }
 }

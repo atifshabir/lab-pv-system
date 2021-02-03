@@ -209,7 +209,9 @@ mongoose.connect(mongoConnectionString, async function() {
             floor: "1st"
         }).save();
 
+        const now = new Date();
         await new MachineInfo({
+            hss_id: "ab:01:cd:33:43:56",
             lab_id: 1,
             pr1: 1,
             pr2: 0,
@@ -217,10 +219,13 @@ mongoose.connect(mongoConnectionString, async function() {
             dr2: 0,
             ss: 0,
             monitor: 1,
-            lastUpdatedBy: "lca"
+            lastUpdatedBy: "lca",
+            monitorUpdateTime: now.getTime(),
+            triggerBufferTime: 20000
         }).save();
 
         await new MachineInfo({
+            hss_id: "ac:01:cd:33:43:56",
             lab_id: 2,
             pr1: 0,
             pr2: 0,
@@ -228,10 +233,13 @@ mongoose.connect(mongoConnectionString, async function() {
             dr2: 0,
             ss: 0,
             monitor: 1,
-            lastUpdatedBy: "lca"
+            lastUpdatedBy: "lca",
+            monitorUpdateTime: now.getTime(),
+            triggerBufferTime: 20000
         }).save();
 
         await new MachineInfo({
+            hss_id: "ad:01:cd:33:43:56",
             lab_id: 3,
             pr1: 1,
             pr2: 0,
@@ -239,10 +247,13 @@ mongoose.connect(mongoConnectionString, async function() {
             dr2: 0,
             ss: 0,
             monitor: 1,
-            lastUpdatedBy: "lca"
+            lastUpdatedBy: "lca",
+            monitorUpdateTime: now.getTime(),
+            triggerBufferTime: 20000
         }).save();
 
         await new MachineInfo({
+            hss_id: "ae:01:cd:33:43:56",
             lab_id: 4,
             pr1: 0,
             pr2: 0,
@@ -250,10 +261,13 @@ mongoose.connect(mongoConnectionString, async function() {
             dr2: 0,
             ss: 0,
             monitor: 1,
-            lastUpdatedBy: "lca"
+            lastUpdatedBy: "lca",
+            monitorUpdateTime: now.getTime(),
+            triggerBufferTime: 20000
         }).save();
 
         await new MachineInfo({
+            hss_id: "af:01:cd:33:43:56",
             lab_id: 5,
             pr1: 0,
             pr2: 0,
@@ -261,10 +275,13 @@ mongoose.connect(mongoConnectionString, async function() {
             dr2: 0,
             ss: 0,
             monitor: 1,
-            lastUpdatedBy: "lca"
+            lastUpdatedBy: "lca",
+            monitorUpdateTime: now.getTime(),
+            triggerBufferTime: 20000
         }).save();
 
         await new MachineInfo({
+            hss_id: " b0:01:cd:33:43:56",
             lab_id: 6,
             pr1: 0,
             pr2: 0,
@@ -272,7 +289,9 @@ mongoose.connect(mongoConnectionString, async function() {
             dr2: 0,
             ss: 0,
             monitor: 1,
-            lastUpdatedBy: "lca"
+            lastUpdatedBy: "lca",
+            monitorUpdateTime: now.getTime(),
+            triggerBufferTime: 20000
         }).save();
 
         /*

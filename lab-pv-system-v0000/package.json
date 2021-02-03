@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
-        "start_sec": "ng serve --open --host=192.168.100.37 --ssl --ssl-key ssl_cert\\from_linux\\selfsigned.key  --ssl-cert ssl_cert\\from_linux\\selfsigned.crt",
+        "start_sec": "ng serve --open --host=localhost --ssl --ssl-key ssl_cert\\from_linux\\selfsigned.key  --ssl-cert ssl_cert\\from_linux\\selfsigned.crt",
         "start": "ng serve --open",
         "build": "ng build",
         "test": "ng test",
@@ -42,7 +42,7 @@
         "zone.js": "~0.10.2"
     },
     "devDependencies": {
-        "@angular-devkit/build-angular": "^0.1000.8",
+        "@angular-devkit/build-angular": "^0.1100.5",
         "@angular/cli": "~9.0.2",
         "@angular/compiler-cli": "~9.0.1",
         "@angular/language-service": "~9.0.1",
@@ -57,7 +57,7 @@
         "karma-coverage-istanbul-reporter": "~2.1.0",
         "karma-jasmine": "~2.0.1",
         "karma-jasmine-html-reporter": "^1.4.2",
-        "lite-server": "^2.5.4",
+        "lite-server": "^2.6.1",
         "nodemon": "^2.0.2",
         "protractor": "~5.4.3",
         "ts-node": "~8.3.0",

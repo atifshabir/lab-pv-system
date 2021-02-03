@@ -50,6 +50,11 @@ app.get('/mobile-frontend', (req, res) => {
     res.sendFile(path.join(__dirname, '../dist/lab-pv-system/index.html'));
 });
 
+app.get('/lca-frontend', (req, res) => {
+    console.log(req.url);
+    res.sendFile(path.join(__dirname, '../dist/lab-pv-system/index.html'));
+});
+
 app.post("/api/send-notification", (req, res, next) => {
 
     var title = req.body.title;
@@ -129,6 +134,7 @@ app.post("/api/egcr-info/add", (req, res, next) => {
 
 app.post("/api/lab/add", (req, res, next) => {
 
+    console.log("haha");
     new Lab({
         lat: req.body.lat,
         lon: req.body.lon,
@@ -146,16 +152,102 @@ app.post("/api/lab/add", (req, res, next) => {
     });
 });
 
+app.post("/api/lab-info/update", (req, res, next) => {
+
+    console.log("api called [/api/lab-info/update]");
+
+    //console.log("update called");
+    const labItem = {
+        "lab_id":req.body.lab_id, 
+        "lat": req.body.lat,
+        "lon": req.body.lon,
+        "city": req.body.city,
+        "area": req.body.area,
+        "phase": req.body.phase,
+        "st": req.body.st,
+        "s_st": req.body.s_st,
+        "building": req.body.building,
+        "floor": req.body.floor
+    };
+
+    console.log(labItem);
+
+    Lab.findOneAndUpdate({ "lab_id": req.body.lab_id }, labItem, { new: true })
+        .then(function(lab) {
+
+            console.log("lab id found");
+
+            return res.status(200).json({
+                status: 200,
+                data: lab,
+                message: "Success"
+            });
+        })
+        .catch(function(err) {
+            console.log("lab id NOT found");
+            return res.status(400).json({
+                status: 400,
+                message: err.message
+            });
+        });
+});
+
+app.post("/api/lab-info/delete", (req, res, next) => {
+
+    console.log("api called [/api/lab-info/delete]");
+
+    //console.log("update called");
+    const labItem = {
+        "lab_id":req.body.lab_id, 
+        "lat": req.body.lat,
+        "lon": req.body.lon,
+        "city": req.body.city,
+        "area": req.body.area,
+        "phase": req.body.phase,
+        "st": req.body.st,
+        "s_st": req.body.s_st,
+        "building": req.body.building,
+        "floor": req.body.floor
+    };
+
+    console.log(labItem);
+
+    Lab.findOneAndDelete({ "lab_id": req.body.lab_id })
+        .then(function(lab) {
+
+            console.log("lab id found");
+
+            return res.status(200).json({
+                status: 200,
+                data: lab,
+                message: "Success"
+            });
+        })
+        .catch(function(err) {
+            console.log("lab id NOT found");
+            return res.status(400).json({
+                status: 400,
+                message: err.message
+            });
+        });
+});
+
 app.post("/api/machine-info/add", (req, res, next) => {
 
+    const now = new Date();
+
     new MachineInfo({
+        hss_id: req.body.hss_id,
         lab_id: req.body.lab_id,
         pr1: req.body.pr1,
         pr2: req.body.pr2,
         dr1: req.body.dr1,
         dr2: req.body.dr2,
         ss: req.body.ss,
-        monitor: req.body.monitor
+        monitor: req.body.monitor,
+        lastUpdatedBy: req.body.lastUpdatedBy,
+        monitorUpdateTime: now.getTime(),
+        triggerBufferTime: 20000
     }).save();
 
     res.status(201).json({
@@ -218,7 +310,11 @@ app.post("/api/machine-info/update", (req, res, next) => {
 
     */
     //console.log("update called");
+
+    const now = new Date();
+
     const machineItem = {
+        "hss_id": req.body.hss_id,
         "lab_id": req.body.lab_id,
         "pr1": req.body.pr1,
         "pr2": req.body.pr2,
@@ -226,33 +322,45 @@ app.post("/api/machine-info/update", (req, res, next) => {
         "dr2": req.body.dr2,
         "ss": req.body.ss,
         "monitor": req.body.monitor,
-        "lastUpdatedBy": req.body.lastUpdatedBy
+        "lastUpdatedBy": req.body.lastUpdatedBy,
+        "monitorUpdateTime": now.getTime(),
+        "triggerBufferTime": 20000
     };
 
     console.log(machineItem);
 
     MachineInfo.find({ "lab_id": req.body.lab_id }).then(function(docs) {
+        
+        const now = new Date();
         console.log("Lab ID found");
         var machineItemInDB = docs[0];
         console.log("machine is ");
         console.log(machineItemInDB);
-
 
         if(machineItem.lastUpdatedBy == "lca") {
             //Lock or unlock commands
             console.log("Machine update msg from lca");
             machineItemInDB.monitor = machineItem.monitor;
             machineItemInDB.lastUpdatedBy = machineItem.lastUpdatedBy;
+            machineItemInDB.monitorUpdateTime = machineItem.monitorUpdateTime;
     
         } else if(machineItem.lastUpdatedBy == "devcom") {
             //Alarm or beacone from devcom
             console.log("Machine update msg from devcom");
-            machineItemInDB.pr1 = machineItem.pr1;
-            machineItemInDB.pr2 = machineItem.pr2;
-            machineItemInDB.dr1 = machineItem.dr1;
-            machineItemInDB.ss = machineItem.ss;
-            machineItemInDB.monitor = machineItem.monitor;
-            machineItemInDB.lastUpdatedBy = machineItem.lastUpdatedBy;
+            console.log("machineItemInDB.monitorUpdateTime: " + machineItemInDB.monitorUpdateTime +
+                        "\nmachineItemInDB.triggerBufferTime: " + machineItemInDB.triggerBufferTime +
+                        "\nnow.getTime(): " + now.getTime()); 
+            if(now.getTime() > (machineItemInDB.monitorUpdateTime + machineItemInDB.triggerBufferTime)) {
+                console.log("Sensor for lab_id" + machineItemInDB.lab_id + " triggered AFTER buffer time");
+                machineItemInDB.pr1 = machineItem.pr1;
+                machineItemInDB.pr2 = machineItem.pr2;
+                machineItemInDB.dr1 = machineItem.dr1;
+                machineItemInDB.dr2 = machineItem.dr2;
+                machineItemInDB.ss = machineItem.ss;
+                machineItemInDB.lastUpdatedBy = machineItem.lastUpdatedBy;
+            } else {
+                console.log("Sensor for lab_id" + machineItemInDB.lab_id + " triggered BEFORE buffer time");
+            }
         }
 
         MachineInfo.findOneAndUpdate({ "lab_id": req.body.lab_id }, machineItemInDB, { new: true })
@@ -364,4 +472,17 @@ app.get("/api/pv-info", (req, res, next) => {
         });
 });
 
+app.post("/api/my-pv-info" , (req,res) =>{
+    PvInfo.findOne({pv_id:req.body.pv_id}, function(err,pv_info) {
+        if(err){
+           return res.send(err)
+        }
+        else if(pv_info){
+           return res.send(pv_info)
+        }
+        
+    })
+});
+
 module.exports = app;
+

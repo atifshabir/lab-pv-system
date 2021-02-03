@@ -11,14 +11,16 @@ export class WebService {
   //base_url: string = "http://192.168.0.108:3000/"
 
   //base_url: string = "http://192.168.100.13:3000/"
-  base_url: string = "http://localhost:3000/"
+  //base_url: string = "http://localhost:3000/"
+  //base_url: string = "https://localhost:18443/"
 
   //base_url: string = "http://192.168.100.37:3000/"
 
   //base_url: string = "https://192.168.100.37:18443/";
 
   //base_url: string = "https://95.217.147.108:18443/";
-
+  
+  base_url: string = "http://148.66.129.239:3000/"
 
   constructor(public http: HttpClient) { }
 
@@ -81,4 +83,41 @@ export class WebService {
     });
   }
 
+  AddLabInfo(lab: any): Observable<any>{
+    let headers = new HttpHeaders();
+    headers = headers.append('Content-Type', 'application/json');
+    let body = JSON.stringify(lab);
+    console.log(body);
+    return this.http.post(this.base_url+'api/lab/add' , body, {
+      headers: headers
+    });
+  }
+
+  updateLabInfo(lab: any): Observable<any>{
+    let headers = new HttpHeaders();
+    headers = headers.append('Content-Type', 'application/json');
+    let body = JSON.stringify(lab);
+    return this.http.post(this.base_url+'api/lab-info/update' , body, {
+      headers: headers
+    });
+  }
+
+  DeleteLabInfo(lab: any): Observable<any>{
+    let headers = new HttpHeaders();
+    headers = headers.append('Content-Type', 'application/json');
+    let body = JSON.stringify(lab);
+    return this.http.post(this.base_url+'api/lab-info/delete' , body, {
+      headers: headers
+    });
+  }
+
+  AddMachineInfo(machine: any): Observable<any>{
+    let headers = new HttpHeaders();
+    headers = headers.append('Content-Type', 'application/json');
+    let body = JSON.stringify(machine);
+    console.log(body);
+    return this.http.post(this.base_url+'api/machine-info/add' , body, {
+      headers: headers
+    });
+  }
 }
