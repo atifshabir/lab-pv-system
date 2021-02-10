@@ -134,22 +134,48 @@ app.post("/api/egcr-info/add", (req, res, next) => {
 
 app.post("/api/lab/add", (req, res, next) => {
 
-    console.log("haha");
-    new Lab({
-        lat: req.body.lat,
-        lon: req.body.lon,
-        city: req.body.city,
-        area: req.body.area,
-        phase: req.body.phase,
-        st: req.body.st,
-        s_st: req.body.s_st,
-        building: req.body.building,
-        floor: req.body.floor
-    }).save();
+    const reqFields = Object.keys(req.body);
 
-    res.status(201).json({
-        message: 'Lab added successfully'
-    });
+    const mustFields = ["lat", "lon", "city", "area", "phase", "st", "s_st", "building", "floor"];
+
+    const isValidOperation = mustFields.every((field) =>
+        reqFields.includes(field)
+    );
+
+    console.log(reqFields);
+    console.log("fields validation is " + isValidOperation);
+
+    if(!isValidOperation) {
+        console.log("Request fields are not complete");
+        return res.status(400).json({
+            status: 400,
+            message: "Incomplete fields"
+        });
+    }
+
+    try {
+        new Lab({
+            lat: req.body.lat,
+            lon: req.body.lon,
+            city: req.body.city,
+            area: req.body.area,
+            phase: req.body.phase,
+            st: req.body.st,
+            s_st: req.body.s_st,
+            building: req.body.building,
+            floor: req.body.floor
+        }).save();
+    
+        res.status(201).json({
+            message: 'Lab added successfully'
+        });
+    } catch(err) {
+        console.log("Error during Lab.save(): " + err.message);
+        return res.status(400).json({
+            status: 400,
+            message: err.message
+        });
+    }
 });
 
 app.post("/api/lab-info/update", (req, res, next) => {
@@ -170,21 +196,30 @@ app.post("/api/lab-info/update", (req, res, next) => {
         "floor": req.body.floor
     };
 
+    console.log("New Lab data in api is ");
     console.log(labItem);
 
     Lab.findOneAndUpdate({ "lab_id": req.body.lab_id }, labItem, { new: true })
         .then(function(lab) {
 
-            console.log("lab id found");
+            if(lab != null) {
+                console.log("lab id found");
 
-            return res.status(200).json({
-                status: 200,
-                data: lab,
-                message: "Success"
-            });
+                return res.status(200).json({
+                    status: 200,
+                    data: lab,
+                    message: "Success"
+                });
+            } else {
+                console.log("lab NOT found against lab_id " + req.body.lab_id);
+                return res.status(404).json({
+                    status: 404,
+                    message: "lab_id not found"
+                });
+            }
         })
         .catch(function(err) {
-            console.log("lab id NOT found");
+            console.log("Error during Lab.findOneAndUpdate(): " + err.message);
             return res.status(400).json({
                 status: 400,
                 message: err.message
@@ -196,35 +231,27 @@ app.post("/api/lab-info/delete", (req, res, next) => {
 
     console.log("api called [/api/lab-info/delete]");
 
-    //console.log("update called");
-    const labItem = {
-        "lab_id":req.body.lab_id, 
-        "lat": req.body.lat,
-        "lon": req.body.lon,
-        "city": req.body.city,
-        "area": req.body.area,
-        "phase": req.body.phase,
-        "st": req.body.st,
-        "s_st": req.body.s_st,
-        "building": req.body.building,
-        "floor": req.body.floor
-    };
-
-    console.log(labItem);
-
     Lab.findOneAndDelete({ "lab_id": req.body.lab_id })
         .then(function(lab) {
 
-            console.log("lab id found");
+            if(lab != null) {
+                console.log("lab id found");
 
-            return res.status(200).json({
-                status: 200,
-                data: lab,
-                message: "Success"
-            });
+                return res.status(200).json({
+                    status: 200,
+                    data: lab,
+                    message: "Success"
+                });
+            } else {
+                console.log("lab NOT found against lab_id " + req.body.lab_id);
+                return res.status(404).json({
+                    status: 404,
+                    message: "lab_id not found"
+                });                
+            }
         })
         .catch(function(err) {
-            console.log("lab id NOT found");
+            console.log("Error during Lab.findOneAndDelete() " + err.message);
             return res.status(400).json({
                 status: 400,
                 message: err.message
@@ -234,39 +261,109 @@ app.post("/api/lab-info/delete", (req, res, next) => {
 
 app.post("/api/machine-info/add", (req, res, next) => {
 
-    const now = new Date();
+    console.log("API called [/api/machine-info/add]");
 
-    new MachineInfo({
-        hss_id: req.body.hss_id,
-        lab_id: req.body.lab_id,
-        pr1: req.body.pr1,
-        pr2: req.body.pr2,
-        dr1: req.body.dr1,
-        dr2: req.body.dr2,
-        ss: req.body.ss,
-        monitor: req.body.monitor,
-        lastUpdatedBy: req.body.lastUpdatedBy,
-        monitorUpdateTime: now.getTime(),
-        triggerBufferTime: 20000
-    }).save();
+    const reqFields = Object.keys(req.body);
 
-    res.status(201).json({
-        message: 'Machine info added successfully'
-    });
+    const mustFields = ["hss_id", "lab_id"];
+
+    const isValidOperation = mustFields.every((field) =>
+        reqFields.includes(field)
+    );
+
+    console.log(reqFields);
+    console.log("fields validation is " + isValidOperation);
+
+    if(!isValidOperation) {
+        console.log("Request fields are not complete");
+        return res.status(400).json({
+            status: 400,
+            message: "Incomplete fields"
+        });
+    }
+
+    try {
+        MachineInfo.find({ "hss_id": req.body.hss_id }).then(function(docs) {
+        
+            if(docs[0] != null) {
+                console.log("In step 1: Machine not found against lab_id " + req.body.lab_id);
+                return res.status(409).json({
+                    status: 400,
+                    message: "machine with hss_id already exists"
+                });
+            }
+        });
+
+    } catch(err) {
+        console.log(err.message);
+    }
+
+    try {
+        const now = new Date();
+
+        new MachineInfo({
+            hss_id: req.body.hss_id,
+            lab_id: req.body.lab_id,
+            pr1: 0,
+            pr2: 0,
+            dr1: 0,
+            dr2: 0,
+            ss: 0,
+            monitor: 0,
+            lastUpdatedBy: "lca",
+            monitorUpdateTime: now.getTime(),
+            triggerBufferTime: 20000
+        }).save(function(err) {
+            if(err) {
+               // console.log(err);
+              /*  console.log(err.code);
+                if(err.code == 11000) {
+                    console.log("HSS_ID already exists");
+                    return res.status(400).json({
+                        status: 400,
+                        message: "HSS_ID already exists"
+                    });         
+                }
+				*/
+            } else {
+                console.log("no error");
+            }
+        });
+    
+        res.status(201).json({
+            message: 'Machine info added successfully'
+        });
+    } catch(err) {
+        console.log("Error during MachineInfo.save(): " + err.message);
+        return res.status(400).json({
+            status: 400,
+            message: err.message
+        });
+    }
+    
 });
 
 app.post("/api/pv-info/add", (req, res, next) => {
 
-    new PvInfo({
-        lat: req.body.lat,
-        lon: req.body.lon,
-        lab_id: req.body.lab_id,
-        lab_order: req.body.lab_order
-    }).save();
-
-    res.status(201).json({
-        message: 'Pv info added successfully'
-    });
+    console.log("API called [/api/pv-info/add]");
+    try {
+        new PvInfo({
+            lat: req.body.lat,
+            lon: req.body.lon,
+            lab_id: req.body.lab_id,
+            lab_order: req.body.lab_order
+        }).save();
+    
+        res.status(201).json({
+            message: 'Pv info added successfully'
+        });
+    } catch(err) {
+        console.log("Error during PvInfo.save(): " + err.message);
+        return res.status(400).json({
+            status: 400,
+            message: err.message
+        });
+    }
 });
 //-------------------------------------------------------
 
@@ -283,19 +380,29 @@ app.post("/api/pv-info/update", (req, res, next) => {
         "pv_id": req.body.pv_id
     };
 
+    console.log("New PV data in api is");
     console.log(pvItem);
 
     PvInfo.findOneAndUpdate({ "pv_id": req.body.pv_id }, pvItem, { new: true })
         .then(function(pv) {
 
-
-            return res.status(200).json({
-                status: 200,
-                data: pv,
-                message: "Success"
-            });
+            if(pv != null) {
+                console.log("pv id found");
+                return res.status(200).json({
+                    status: 200,
+                    data: pv,
+                    message: "Success"
+                });
+            } else {
+                console.log("pv NOT FOUND against pv_id " + req.body.pv_id);
+                return res.status(404).json({
+                    status: 404,
+                    message: "pv_id not found"
+                });
+            }
         })
         .catch(function(err) {
+            console.log("Error during PvInfo.findOneAndUpdate(): " + err.message);
             return res.status(400).json({
                 status: 400,
                 message: err.message
@@ -303,13 +410,42 @@ app.post("/api/pv-info/update", (req, res, next) => {
         });
 });
 
+// Method to delete pv-info
+app.post("/api/pv-info/delete", (req, res, next) => {
+
+    console.log("pv delete called");
+
+    PvInfo.findOneAndDelete({ "pv_id": req.body.pv_id })
+    .then(function(pv) {
+
+        if(pv != null) {
+            console.log("pv id found is " + pv.pv_id);
+
+            return res.status(200).json({
+                status: 200,
+                data: pv,
+                message: "Success"
+            });
+        } else {
+            console.log("pv NOT FOUND against id " + req.body.pv_id);
+            return res.status(404).json({
+                status: 404,
+                message: "pv_id not found in the database"
+            });
+        }
+    })
+    .catch(function(err) {
+        console.log("Error during PvInfo.findOneAndDelete :" + err.message);
+        return res.status(400).json({
+            status: 400,
+            message: err.message
+        });
+    });
+});
+
 // Method to update machine-info
 app.post("/api/machine-info/update", (req, res, next) => {
 
-    /*
-
-    */
-    //console.log("update called");
 
     const now = new Date();
 
@@ -331,6 +467,14 @@ app.post("/api/machine-info/update", (req, res, next) => {
 
     MachineInfo.find({ "lab_id": req.body.lab_id }).then(function(docs) {
         
+        if(docs[0] == null) {
+            console.log("In step 1: Machine not found against lab_id " + req.body.lab_id);
+            return res.status(404).json({
+                status: 404,
+                message: "machine with lab_id not found"
+            });
+        }
+
         const now = new Date();
         console.log("Lab ID found");
         var machineItemInDB = docs[0];
@@ -365,7 +509,13 @@ app.post("/api/machine-info/update", (req, res, next) => {
 
         MachineInfo.findOneAndUpdate({ "lab_id": req.body.lab_id }, machineItemInDB, { new: true })
             .then(function(machine) {
-
+                if(machine == null) {
+                    console.log("In step 2: Machine not found against lab_id " + req.body.lab_id);
+                    return res.status(404).json({
+                        status: 404,
+                        message: "machine with lab_id not found"
+                    });
+                }
                 console.log("Updated lab");
                 return res.status(200).json({
                     status: 200,
@@ -383,7 +533,7 @@ app.post("/api/machine-info/update", (req, res, next) => {
 
     })
     .catch(function(err) {
-        console.log("Error in machine update");
+        console.log("Error in machine update: " + err.message);
         return res.status(400).json({
             status: 400,
             message: err.message
@@ -393,7 +543,38 @@ app.post("/api/machine-info/update", (req, res, next) => {
 });
 //-------------------------------
 
+// Method to delete machine-info
+app.post("/api/machine-info/delete", (req, res, next) => {
 
+    console.log("Machine delete called");
+
+    MachineInfo.findOneAndDelete({ "hss_id": req.body.hss_id })
+    .then(function(machine) {
+
+        if(machine != null) {
+            console.log("hss id found");
+
+            return res.status(200).json({
+                status: 200,
+                data: machine,
+                message: "Success"
+            });
+        } else {
+            console.log("hss NOT found against ID " + req.body.hss_id);
+            return res.status(404).json({
+                status: 404,
+                message: "hss_id not found"
+            });            
+        } 
+    })
+    .catch(function(err) {
+        console.log("Error during MachineInfo.findOneAndDelete(): " + err.message);
+        return res.status(400).json({
+            status: 400,
+            message: err.message
+        });
+    });
+});
 
 // get all data
 app.get("/api/egcr-info", (req, res, next) => {

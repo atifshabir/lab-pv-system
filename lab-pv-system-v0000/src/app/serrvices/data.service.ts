@@ -61,8 +61,20 @@ export class DataService {
     return this.webService.updatePvInfo(pv);
   }
 
+  DeletePVInfo(pv: any){
+    return this.webService.DeletePVInfo(pv);
+  }
+
+  AddPVInfo(pv: any){
+    return this.webService.AddPVInfo(pv);
+  }
+
   updateMachineInfo(machine: any){
     return this.webService.updateMachineInfo(machine);
+  }
+
+  DeleteMachineInfo(machine: any){
+    return this.webService.DeleteMachineInfo(machine);
   }
 
   AddLabInfo(lab: any){
