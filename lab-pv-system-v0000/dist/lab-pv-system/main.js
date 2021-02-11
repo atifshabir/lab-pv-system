@@ -929,8 +929,17 @@ class DataService {
     updatePvInfo(pv) {
         return this.webService.updatePvInfo(pv);
     }
+    DeletePVInfo(pv) {
+        return this.webService.DeletePVInfo(pv);
+    }
+    AddPVInfo(pv) {
+        return this.webService.AddPVInfo(pv);
+    }
     updateMachineInfo(machine) {
         return this.webService.updateMachineInfo(machine);
+    }
+    DeleteMachineInfo(machine) {
+        return this.webService.DeleteMachineInfo(machine);
     }
     AddLabInfo(lab) {
         return this.webService.AddLabInfo(lab);
@@ -1201,30 +1210,104 @@ class LcaMainComponent {
             monitor: 1,
             lastUpdatedBy: "lca"
         }).subscribe((data) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            //console.log(data);
+            console.log(data);
             var notificationTitle = "New PV Assignment";
             var notificationBody = "Process Validation (PV) ID: " + data.data.pv_id + " has been assigned to LAB ID: " + data.data.lab_id;
             //this.webService.sendNotification(notificationTitle, notificationBody).subscribe();
         }));
         /*
+        this.dataService.DeleteMachineInfo({
+          hss_id: "ad:01:cd:33:43:56"
+        }).subscribe( async data=>{
+          console.log(data);
+        });
+        */
+        /*
+        this.dataService.DeletePVInfo({
+          pv_id: Number(elementInpMyMachineID.value)
+        }).subscribe( async data=>{
+          console.log(data);
+        });
+        */
+        /*
         this.dataService.DeleteLabInfo({
          lab_id: Number(elementInpMyMachineID.value),
          lat: 2.2,
          lon: 5.6,
-         city: "Islamabad",
-         area: "CDA Sectors",
-         phase: "I-8/3",
-         st: "86",
-         s_st: "NA",
-         building: "486",
-         floor: "0"
+         city: "abcd",
+         area: "def",
+         phase: "ghi",
+         st: "jkl",
+         s_st: "mno",
+         building: "pqr",
+         floor: "stu"
        }).subscribe( async data=>{
-         //console.log(data);
-         var notificationTitle = "Update Lab Info";
-         var notificationBody = "Process Validation (LAB) ID: "+data.data.lab_id;
-         //this.webService.sendNotification(notificationTitle, notificationBody).subscribe();
+         console.log(data);
        });
        */
+        /*
+         this.dataService.updateLabInfo({
+          lab_id: Number(elementInpMyMachineID.value),
+          lat: 2.2,
+          lon: 5.6,
+          city: "abcd",
+          area: "def",
+          phase: "ghi",
+          st: "jkl",
+          s_st: "mno",
+          building: "pqr",
+          floor: "stu"
+        }).subscribe( async data=>{
+          console.log(data);
+        });
+        */
+        /*
+           this.dataService.updatePvInfo({
+            pv_id: Number(elementInpMyMachineID.value),
+            lab_id: 0,
+            lat: 3.5,
+            lon: 6.4,
+            lab_order: "CCR"
+          }).subscribe( async data=>{
+            console.log(data);
+          });
+          */
+        /*
+           this.dataService.AddLabInfo({
+            lab_id: Number(elementInpMyMachineID.value),
+            lat: 2.2,
+            lon: 5.6,
+            city: "abcd",
+            area: "def",
+            phase: "ghi",
+            //st: "jkl",
+            s_st: "mno",
+            building: "pqr",
+            floor: "stu"
+          }).subscribe( async data=>{
+            console.log(data);
+          });
+          */
+        /*
+          this.dataService.AddMachineInfo({
+            hss_id: "12:21:34:ab:ca:de",
+            lab_id: Number(elementInpMyMachineID.value)
+            
+          }).subscribe( async data=>{
+            console.log(data);
+          });
+          */
+        /*
+        this.dataService.AddPVInfo({
+          lat: 2.3,
+          lon: 5.4,
+          lab_id: 0,
+          lab_order: "CCR"
+          
+        }).subscribe( async data=>{
+          console.log(data);
+        });
+        */
     }
     onClick_BtnUnlock() {
         console.log("Unlock button pressed");
@@ -1383,11 +1466,35 @@ class WebService {
             headers: headers
         });
     }
+    DeletePVInfo(pv) {
+        let headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]();
+        headers = headers.append('Content-Type', 'application/json');
+        let body = JSON.stringify(pv);
+        return this.http.post(this.base_url + 'api/pv-info/delete', body, {
+            headers: headers
+        });
+    }
+    AddPVInfo(pv) {
+        let headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]();
+        headers = headers.append('Content-Type', 'application/json');
+        let body = JSON.stringify(pv);
+        return this.http.post(this.base_url + 'api/pv-info/add', body, {
+            headers: headers
+        });
+    }
     updateMachineInfo(machine) {
         let headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]();
         headers = headers.append('Content-Type', 'application/json');
         let body = JSON.stringify(machine);
         return this.http.post(this.base_url + 'api/machine-info/update', body, {
+            headers: headers
+        });
+    }
+    DeleteMachineInfo(machine) {
+        let headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]();
+        headers = headers.append('Content-Type', 'application/json');
+        let body = JSON.stringify(machine);
+        return this.http.post(this.base_url + 'api/machine-info/delete', body, {
             headers: headers
         });
     }
