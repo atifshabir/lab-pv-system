@@ -17,14 +17,27 @@ export class LcaMainComponent implements OnInit {
     console.log("Lock button pressed");
     var elementInpMyMachineID = document.getElementById("myMachineID")! as HTMLInputElement;
     
+    this.dataService.getMyMachineInfo({
+      hss_id: "ab:cd:ef:01:23:45",
+      lab_id: Number(elementInpMyMachineID.value),
+      monitor: 1,
+      lastUpdatedBy: "lca"
+    }).subscribe( async data=>{
+      console.log("myMachine info is");
+      console.log(data);
+      const machine = data.data;
+      console.log(machine.lab_id);
+      console.log(machine.monitor);
+      //console.log(data.monitors)
+      var notificationTitle = "New PV Assignment";
+      var notificationBody = "Process Validation (PV) ID: "+data.data.pv_id+" has been assigned to LAB ID: "+ data.data.lab_id
+      //this.webService.sendNotification(notificationTitle, notificationBody).subscribe();
+    });
+
+    /*
     this.dataService.updateMachineInfo({
       hss_id: "ab:cd:ef:01:23:45",
       lab_id: Number(elementInpMyMachineID.value),
-      pr1: 0,
-      pr2: 0,
-      dr1: 0,
-      dr2: 0,
-      ss: 0,
       monitor: 1,
       lastUpdatedBy: "lca"
     }).subscribe( async data=>{
@@ -33,6 +46,7 @@ export class LcaMainComponent implements OnInit {
       var notificationBody = "Process Validation (PV) ID: "+data.data.pv_id+" has been assigned to LAB ID: "+ data.data.lab_id
       //this.webService.sendNotification(notificationTitle, notificationBody).subscribe();
     });
+    */
     
     /*
     this.dataService.DeleteMachineInfo({

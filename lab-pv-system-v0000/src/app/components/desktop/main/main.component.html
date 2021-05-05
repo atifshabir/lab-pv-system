@@ -1,17 +1,22 @@
-<div style="background-color: grey;">
+<body>
+<div>
 
-
-    <div class="row no-gutters p-1">
-        <div class="col-12">
-            <app-information-panel></app-information-panel>
-        </div>
+    <div class="headerBar">
+        <h1 class="heading"> SMART MUHAFIZ <span class="titleSecond">By: Nemud Technologies</span></h1> 
     </div>
-    <div class="row no-gutters p-1" style="height: 670px;">
-        <div class="col-lg-11 col-md-7" style="border: maroon">
+    <div class="row no-gutters p-1" style="height: 700px;">
+        <div class="col-lg-2 col-md-7">
+            <app-information-panel></app-information-panel>
+            <div>
+                <br>
+                  <app-control-panel></app-control-panel></div>
+        </div>
+      
+        <div class="col-lg-10 col-md-7" >
             <app-map-panel></app-map-panel>
         </div>
-        <div class="col-lg-1 col-md-5">
-            <app-control-panel></app-control-panel>
-        </div>
+     
     </div>
+    <div class="footer"></div>
 </div>
+</body>

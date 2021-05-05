@@ -576,6 +576,39 @@ app.post("/api/machine-info/delete", (req, res, next) => {
     });
 });
 
+// Method to get a single machine-info against lab-id
+app.post("/api/machine-info/my-info", (req, res, next) => {
+
+    console.log("My machine info called");
+
+    MachineInfo.findOne({ "lab_id": req.body.lab_id })
+    .then(function(machine) {
+
+        if(machine != null) {
+            console.log("lab_id found");
+
+            return res.status(200).json({
+                status: 200,
+                data: machine,
+                message: "Success"
+            });
+        } else {
+            console.log("lab_id NOT found against ID " + req.body.hss_id);
+            return res.status(404).json({
+                status: 404,
+                message: "lab_id not found"
+            });            
+        } 
+    })
+    .catch(function(err) {
+        console.log("Error during MachineInfo.findOneAndDelete(): " + err.message);
+        return res.status(400).json({
+            status: 400,
+            message: err.message
+        });
+    });
+});
+
 // get all data
 app.get("/api/egcr-info", (req, res, next) => {
 

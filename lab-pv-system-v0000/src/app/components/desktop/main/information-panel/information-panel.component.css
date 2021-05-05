@@ -1,13 +1,26 @@
 .info_heading {
     float: left;
-    width: 50%;
+    width: 100%;
     color: white;
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 17px;
+    /* text-decoration: underline; */
 }
 
 .nemud_logo {
     float: right;
     width: 50%;
     text-align: right;
+}
+.infoBody
+{
+    background-color: #212529;
+}
+.tableSet
+{
+    color: white;
+    font-size: 14px;
+    float: left;
+    padding-left: 0px;
+    margin-left: 0px;
+    /* margin-left: -14px;; */
 }

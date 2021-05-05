@@ -1,8 +1,7 @@
-<div class="card" style="border: maroon; border-style: solid;" #ipanel>
+<!-- <div class="card" style="border: maroon; border-style: solid;" #ipanel>
     <div class="card-body " style="background-color:DarkCyan;">
 
         <div *ngIf="!this.dataService.infoPresent " style="background-color:black; width: 100%;">
-            <!--p style="color:FloralWhite; ">Click on House or PV icons to view details</p-->
             <p class="info_heading">Click on any House or PV icon to view details</p>
             <p class="nemud_logo">SMART MUHAFIZ - by NEMUD TECHNOLOGIES</p>
         </div>
@@ -53,7 +52,6 @@
 
 
         <div class="row " *ngIf="this.dataService.infoPresent && this.dataService.pvInfo ">
-            <!--h5 style="color:FloralWhite; ">Patrol-Vehicle Information</h5-->
             <p class="info_heading">Patrol-Vehicle Information</p>
             <p class="nemud_logo">SMART MUHAFIZ - by NEMUD TECHNOLOGIES</p>
         </div>
@@ -85,7 +83,6 @@
         </div>
 
         <div class="row " *ngIf="this.dataService.infoPresent && this.dataService.labMachineInfo ">
-            <!--h5 style="color:FloralWhite; ">House Information</h5-->
             <p class="info_heading">House Information</p>
             <p class="nemud_logo">SMART MUHAFIZ - by NEMUD TECHNOLOGIES</p>
         </div>
@@ -134,4 +131,134 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
+ <div class="card infoBody"  #ipanel>
+    <div class="card-body " >
+
+        <div *ngIf="!this.dataService.infoPresent "  class="row ">
+            <p class="info_heading">Click on any House or PV icon to view details</p>
+            <!-- <p class="nemud_logo">SMART MUHAFIZ - by NEMUD TECHNOLOGIES</p> -->
+        </div>
+        <div class="row " *ngIf="!this.dataService.infoPresent " style="width: 100%;">
+            <div class="col-12 ">
+                <div class="table-responsive ">
+                    <table class="table table-sm tableSet ">
+                        <tr>HSS-ID: xxxx</tr>
+                        <tr>Phone: xxxx</tr>
+                        <tr>Area: xxxx</tr>
+                        <tr>Phase: xxxx</tr>
+                        <tr>Street: xxxx</tr>
+                        <tr>Sub-Street: xxxx</tr>
+                        <tr>Building: xxxx</tr>
+                        <tr>Floor: xxxx</tr>
+                        <br>
+                        <tr>Front Human: xxxx</tr>
+                        <tr>Back Human: xxxx</tr>
+                        <tr>Front Door: xxxx</tr>
+                        <tr>Back Door: xxxx </tr>
+                        <tr>Smoke: xxxx</tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row " *ngIf="this.dataService.infoPresent && this.dataService.pvInfo ">
+            <p class="info_heading">Patrol-Vehicle Information</p>
+            <!-- <p class="nemud_logo">SMART MUHAFIZ - by NEMUD TECHNOLOGIES</p> -->
+        </div>
+
+        <div *ngIf="this.dataService.infoPresent && this.dataService.pvInfo " #machineInfo class="row ">
+
+            <div class="col-12 ">
+                <div class="table-responsive ">
+                    <table class="table table-sm tableSet ">
+                        <!-- <thead>
+                            <tr>
+
+                                <th scope="col ">PV-ID</th>
+                                <th scope="col ">LAB-ID</th>
+                                <th scope="col ">LAB ORDER</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{this.dataService.selectedPv.PV_ID}}</td>
+                                <td>{{this.dataService.selectedPv.LAB_ID}}</td>
+                                <td>{{this.dataService.selectedPv.LAB_order}}</td>
+                            </tr>
+
+                        </tbody> -->
+                        <tr>PV-ID: {{this.dataService.selectedPv.PV_ID}}</tr>
+                        <tr>LAB-ID: {{this.dataService.selectedPv.LAB_ID}}</tr>
+                        <tr>LAB ORDER: {{this.dataService.selectedPv.LAB_order}}</tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row " *ngIf="this.dataService.infoPresent && this.dataService.labMachineInfo ">
+            <p class="info_heading">HOUSE INFORMATION</p>
+            <!-- <p class="nemud_logo">SMART MUHAFIZ - by NEMUD TECHNOLOGIES</p> -->
+        </div>
+        <div class="row " *ngIf="this.dataService.infoPresent && this.dataService.labMachineInfo" style="width: 100%;">
+            <div class="col-12 ">
+                <div class="table-responsive ">
+                    <table class="table table-sm tableSet ">
+                        <tr>HSS-ID: {{this.dataService.selectedLabMachine.LAB_ID}}</tr>
+                        <tr>Phone: {{this.dataService.selectedLabMachine.City}}</tr>
+                        <tr>Area: {{this.dataService.selectedLabMachine.Area}}</tr>
+                        <tr>Phase: {{this.dataService.selectedLabMachine.Phase}}</tr>
+                        <tr>Street: {{this.dataService.selectedLabMachine.St}}</tr>
+                        <tr>Sub-Street: {{this.dataService.selectedLabMachine.S_ST}}</tr>
+                        <tr>Building: {{this.dataService.selectedLabMachine.Building}}</tr>
+                        <tr>Floor: {{this.dataService.selectedLabMachine.Floor}}</tr>
+                        <tr></tr>
+                        <br>
+                        <tr>
+                            <div *ngIf="this.dataService.selectedLabMachine.PR1" style="color: red;">
+                                Front Human: {{this.dataService.selectedLabMachine.PR1}}
+                            </div>
+                            <div *ngIf="!this.dataService.selectedLabMachine.PR1">
+                                Front Human: {{this.dataService.selectedLabMachine.PR1}}
+                            </div>
+                        </tr>
+                        <tr>
+                            <div *ngIf="this.dataService.selectedLabMachine.PR2" style="color: red;">
+                                Back Human: {{this.dataService.selectedLabMachine.PR2}}
+                            </div>
+                            <div *ngIf="!this.dataService.selectedLabMachine.PR2">
+                                Back Human: {{this.dataService.selectedLabMachine.PR2}}
+                            </div>
+                        </tr>
+                        <tr>
+                            <div *ngIf="this.dataService.selectedLabMachine.DR1" style="color: red;">
+                                Front Door: {{this.dataService.selectedLabMachine.DR1}}
+                            </div>
+                            <div *ngIf="!this.dataService.selectedLabMachine.DR1">
+                                Front Door: {{this.dataService.selectedLabMachine.DR1}}
+                            </div>
+                        </tr>
+                        <tr>
+                            <div *ngIf="this.dataService.selectedLabMachine.DR2" style="color: red;">
+                                Back Door: {{this.dataService.selectedLabMachine.DR2}}
+                            </div>
+                            <div *ngIf="!this.dataService.selectedLabMachine.DR2">
+                                Back Door: {{this.dataService.selectedLabMachine.DR2}}
+                            </div>
+                        </tr>
+                        <tr>
+                            <div *ngIf="this.dataService.selectedLabMachine.SS" style="color: red;">
+                                Smoke: {{this.dataService.selectedLabMachine.SS}}
+                            </div>
+                            <div *ngIf="!this.dataService.selectedLabMachine.SS">
+                                Smoke: {{this.dataService.selectedLabMachine.SS}}
+                            </div>
+                        </tr>
+                       
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

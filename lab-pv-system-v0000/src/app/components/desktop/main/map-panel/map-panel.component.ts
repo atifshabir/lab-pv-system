@@ -1,3 +1,4 @@
+import { LabInfoToMarker } from './../../../../models/model.lab';
 import { Component, OnInit } from '@angular/core';
 import { ViewChild, TemplateRef, Input} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -9,6 +10,8 @@ import { DataService } from 'src/app/serrvices/data.service';
 import { MessagingService } from 'src/app/serrvices/messaging.service';
 import { WebService } from 'src/app/serrvices/web.service';
 import { MapPanelParams } from 'src/app/components/desktop/main/map-panel/map-panel-params';
+import { PVInfoToMarker } from 'src/app/models/model.pv-info';
+//import { Console } from 'console';
 
 
 @Component({
@@ -38,7 +41,7 @@ export class MapPanelComponent implements OnInit {
 
   pollTime: number = 3; // time in seconds to sync with db
 
-
+ 
   // Data Arrays
   labMachineInfo: LabMachineInfo [] = [];
   pvInfo: PVInfo [] = [];
@@ -46,8 +49,11 @@ export class MapPanelComponent implements OnInit {
 
   // markers on the map
   labMachineInfoMarkers: google.maps.Marker [] = [];
+
   pvInfoMarkers: google.maps.Marker [] = [];
+  LabInfoToMarker :LabInfoToMarker [] = [];
   egcrInfoMarkers: google.maps.Marker [] = [];
+  pvInfoToMarer: PVInfoToMarker [] = [];
 
   // from pv to labs arrows --->
   arrowPolylines: google.maps.Polyline [] = [];
@@ -84,6 +90,7 @@ export class MapPanelComponent implements OnInit {
   }
 
   ngOnInit(){
+    // this.map.setMapTypeId("SATELLITE");
     this.msgService.getPermission();
     this.msgService.receiveMessage();
     this.message = this.msgService.currentMessage;
@@ -94,6 +101,8 @@ export class MapPanelComponent implements OnInit {
         this.HandleMsgFromCtrlPanelComp(msg);
       }
     )
+    // this.map.setMapTypeId('terrain');
+   
   }
 
   HandleMsgFromCtrlPanelComp(msg: String) {
@@ -146,6 +155,9 @@ export class MapPanelComponent implements OnInit {
       center: new google.maps.LatLng(this.Lat, this.Lon),
       zoom: this.Zoom,
       mapTypeId: google.maps.MapTypeId.ROADMAP
+      // mapTypeId: google.maps.MapTypeId.HYBRID
+      // mapTypeId: google.maps.MapTypeId.SATELLITE
+      // mapTypeId: google.maps.MapTypeId.TERRAIN
     };
     this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
 
@@ -414,7 +426,7 @@ export class MapPanelComponent implements OnInit {
         }
         iconCfg = {
 
-		  url: 'assets/icons/alarm_lab.gif',
+		  url: 'assets/icons/red_alarmed_lab.png',
           anchor: new google.maps.Point(20, 20)
         };
       } else {
@@ -423,12 +435,24 @@ export class MapPanelComponent implements OnInit {
           return;
         }
         iconCfg = {
-		  url: 'assets/icons/blue_lab.gif',
+		  url: 'assets/icons/green_lab.png',
           anchor: new google.maps.Point(20, 20)
         };
       }
 
-
+      for(var i=0; i<this.LabInfoToMarker.length; i++) {
+        if(this.LabInfoToMarker[i].LAB_ID == record.LAB_ID) {
+          break;
+        }
+      }
+      if(i < this.labMachineInfoMarkers.length) {
+        // console.log(this.pvInfoToMarer[i].pvInfoMarker);
+        var latLng = new google.maps.LatLng(record.Lat.valueOf(), record.Lon.valueOf());
+        this.LabInfoToMarker[i].labInfoMarker.setPosition(latLng);
+        this.LabInfoToMarker[i].labInfoMarker.setIcon(iconCfg);
+       // this.pvInfoMarkers.splice(i, 1);
+        //this.pvInfoToMarer.pop();
+      } else {
       var newCreatedMarker = new google.maps.Marker({
         position: {lat: record.Lat.valueOf(), lng: record.Lon.valueOf()},
         icon: iconCfg,
@@ -437,6 +461,8 @@ export class MapPanelComponent implements OnInit {
         title: record.LAB_ID.toString()
       });
 
+      console.log(newCreatedMarker);
+        this.LabInfoToMarker.push(new LabInfoToMarker(record.LAB_ID, newCreatedMarker));
       /*
       // adding right click if it's desktop
       if(!this.isMobile){
@@ -477,7 +503,7 @@ export class MapPanelComponent implements OnInit {
 
 
       this.labMachineInfoMarkers.push(newCreatedMarker);
-
+    }
     });
   }
 
@@ -493,14 +519,14 @@ export class MapPanelComponent implements OnInit {
       }
 
       var iconCfg;
-
+// if
       if(assigned){
         // creating red triangle marker
         if(this.mapPanelParams.showEngagedPV == false) {
           return;
         }
         iconCfg = {
-          url: 'assets/icons/alarm_pv.gif',
+          url: 'assets/icons/pv_alarmed.gif',
           anchor: new google.maps.Point(20, 20)
         };
 
@@ -517,60 +543,80 @@ export class MapPanelComponent implements OnInit {
           return;
         }
         iconCfg = {
-          url: 'assets/icons/blue_pv.gif',
+          url: 'assets/icons/pv.gif',
           anchor: new google.maps.Point(20, 20)
         };
       }
 
-      var newCreatedMarker = new google.maps.Marker({
-        position: {lat: record.Lat.valueOf(), lng: record.Lon.valueOf()},
-        icon: iconCfg,
-        cursor: 'help',
-        map: this.map,
-        title: record.PV_ID.toString()
-      });
-
-      if(!this.isMobile){
-        // for right click if not mobile for options on PV
-        newCreatedMarker.addListener('rightclick', (ev)=> {
-          this.dataService.pvAssignId = parseInt(newCreatedMarker.getTitle().toString());
-          this.openModal(this.optionTemplate);
-          ev.stop();
-        });
+      for(var i=0; i<this.pvInfoToMarer.length; i++) {
+        if(this.pvInfoToMarer[i].PV_ID == record.PV_ID) {
+          break;
+        }
       }
 
-      newCreatedMarker.addListener('click', (ev)=> {
+      console.log("pass 1, " + this.pvInfoToMarer.length + ", " +  i);
+      if(i < this.pvInfoMarkers.length) {
+        console.log(this.pvInfoToMarer[i].pvInfoMarker);
+        var latLng = new google.maps.LatLng(record.Lat.valueOf(), record.Lon.valueOf());
+        this.pvInfoToMarer[i].pvInfoMarker.setPosition(latLng);
+        this.pvInfoToMarer[i].pvInfoMarker.setIcon(iconCfg);
+       // this.pvInfoMarkers.splice(i, 1);
+        //this.pvInfoToMarer.pop();
+      } else {
+        console.log("pass 11, " + this.pvInfoToMarer.length + ", " + i);
 
-        if(this.dataService.pvAssignInProgress){
-          alert("Unabled to select PV due to assignment in progress");
-          return;
+        var newCreatedMarker = new google.maps.Marker({
+          position: {lat: record.Lat.valueOf(), lng: record.Lon.valueOf()},
+          icon: iconCfg,
+          cursor: 'help',
+          map: this.map,
+          title: record.PV_ID.toString()
+        });
+
+        console.log("pass 6");
+        console.log(newCreatedMarker);
+        this.pvInfoToMarer.push(new PVInfoToMarker(record.PV_ID, newCreatedMarker));
+
+        if(!this.isMobile){
+          // for right click if not mobile for options on PV
+          newCreatedMarker.addListener('rightclick', (ev)=> {
+            this.dataService.pvAssignId = parseInt(newCreatedMarker.getTitle().toString());
+            this.openModal(this.optionTemplate);
+            ev.stop();
+          });
         }
-
-        var pvId = parseInt(newCreatedMarker.getTitle().toString());
-
-        this.pvInfo.forEach((checkRec)=>{
-          if(checkRec.PV_ID.valueOf() == pvId){
-            this.dataService.infoPresent = true;
-            this.dataService.labMachineInfo = false;
-            this.dataService.pvInfo = true;
-            this.dataService.selectedPv = checkRec;
-
-            //console.log("found record");
+  
+        newCreatedMarker.addListener('click', (ev)=> {
+  
+          if(this.dataService.pvAssignInProgress){
+            alert("Unabled to select PV due to assignment in progress");
+            return;
           }
-        })
+  
+          var pvId = parseInt(newCreatedMarker.getTitle().toString());
+  
+          this.pvInfo.forEach((checkRec)=>{
+            if(checkRec.PV_ID.valueOf() == pvId){
+              this.dataService.infoPresent = true;
+              this.dataService.labMachineInfo = false;
+              this.dataService.pvInfo = true;
+              this.dataService.selectedPv = checkRec;
+  
+              //console.log("found record");
+            }
+          })
+  
+          if(this.isMobile){
+            // if it's mobile then showing info in model
+            this.openModal(this.infoTemplate);
+          }
+  
+          ev.stop();
+        });
 
-        if(this.isMobile){
-          // if it's mobile then showing info in model
-          this.openModal(this.infoTemplate);
-        }
-
-        ev.stop();
-      });
-
-
-      this.pvInfoMarkers.push(newCreatedMarker);
+        this.pvInfoMarkers.push(newCreatedMarker);
+      }
     });
-
   }
 
   createEgcrInfoMarkers(){
@@ -624,26 +670,31 @@ export class MapPanelComponent implements OnInit {
   refreshMarkers(){
     //removing old markers
 
-    this.labMachineInfoMarkers.forEach((e)=>{
-      e.setMap(null);
-    });
+    // this.labMachineInfoMarkers.forEach((e)=>{
+    //   e.setMap(null);
+    // });
+    // this.createLabMachineInfoMarkers();
 
-    this.pvInfoMarkers.forEach((e)=>{
-      e.setMap(null);
-    });
+  //  this.pvInfoMarkers.forEach((e)=>{
+  //    e.setMap(null);
+  //  });
+    // this.createPvInfoMarkers();
 
-    this.egcrInfoMarkers.forEach((e)=>{
-      e.setMap(null);
-    });
+    // this.egcrInfoMarkers.forEach((e)=>{
+    //   e.setMap(null);
+    // });
 
     this.arrowPolylines.forEach((e)=>{
       e.setMap(null);
     });
+    this.createEgcrInfoMarkers();
 
     // creating updated ones
     this.createLabMachineInfoMarkers();
     this.createPvInfoMarkers();
     this.createEgcrInfoMarkers();
+
+    
   }
 
   openModal(template: TemplateRef<any>) {

@@ -10,3 +10,12 @@ export class Lab{
     Building: String; //Building number
     Floor: String; //Floor of the building
 }
+export class LabInfoToMarker{
+    LAB_ID: Number;
+    labInfoMarker: google.maps.Marker;
+
+    constructor(_labID: Number, _labInfoMarker: google.maps.Marker) {
+        this.LAB_ID = _labID;
+        this.labInfoMarker =_labInfoMarker;
+    }
+}

@@ -73,6 +73,10 @@ export class DataService {
     return this.webService.updateMachineInfo(machine);
   }
 
+  getMyMachineInfo(machine: any){
+    return this.webService.getMyMachineInfo(machine);
+  }
+
   DeleteMachineInfo(machine: any){
     return this.webService.DeleteMachineInfo(machine);
   }

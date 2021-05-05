@@ -1,4 +1,4 @@
-<div class="card ml-1 my-pattern" #cpanel style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; border: maroon; border-style: solid;">
+<!-- <div class="card ml-1 my-pattern" #cpanel style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; border: maroon; border-style: solid;">
     <div style="background-color: LightSteelBlue;
       font-size: 20px;
       font-weight: bold;
@@ -21,4 +21,22 @@
 
     <button class="recenter_button" type="button" id="btnRecenterMap" (click)="onClickBtnRecenter()">RECENTER MAP</button>
 
-</div>
+</div> -->
+<div class="card ml-1 bodySet" #cpanel>
+   <p class="headingFont" >OPTIONS</p>
+    <div style="margin-left: 9px;">
+        <!-- <p style="font-size: 12px; text-align: left; color: blanchedalmond;">Show labels<br></p> -->
+        <input type="checkbox" id="chkBoxShowNormalHouse" checked="true" (click)="onClickChkBoxShowNormalHouse()">
+        <Label class="label_text">Normal House</Label><br>
+        <input type="checkbox" id="chkBoxShowAlarmedHouse" checked="true" (click)="onClickChkBoxShowAlarmedHouse()">
+        <Label class="label_text">Alarmed House</Label><br>
+        <input type="checkbox" id="chkBoxShowNormalPV" checked="true" (click)="onClickChkBoxShowNormalPV()">
+        <Label class="label_text">Normal PV</Label><br>
+        <input type="checkbox" id="chkBoxShowEngagedPV" checked="true" (click)="onClickChkBoxShowEngagedPV()">
+        <Label class="label_text">Engaged PV</Label><br>
+    </div>
+
+    <button class="button_recenter" type="button" id="btnRecenterMap" (click)="onClickBtnRecenter()">RECENTER MAP</button>
+
+</div> 
+

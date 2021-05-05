@@ -1,3 +1,16 @@
+.headingFont {
+    width: 50%;
+    color: white;
+    font-size: 17px;
+    text-align: left;
+    /* margin-left: 2%; */
+}
+.bodySet
+{
+    background-color: #212529;
+   
+}
+/* old */
 .my-pattern {
     background-color: LightSteelBlue;
     background-position: 0 0, 6px 6px;
@@ -28,4 +41,13 @@
     top: 85%;
     border-radius: 30%;
     margin: 4px 2px;
+}
+.button_recenter{
+    font-size: 14px;
+    color: lightyellow;
+    background-color:darkslategrey;
+    position: absolute;
+    margin: 4px 2px;
+    margin-top: 200px;
+
 }
